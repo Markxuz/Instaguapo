@@ -106,7 +106,18 @@ function Signup() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600"
               />
             </div>
-
+            
+            {/* Phone Number Field */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
+              <input
+                type="tel"
+                value={phonenumber}
+                onChange={(e) => setPhonenumber(e.target.value)}
+                placeholder="Enter your phone number"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600"
+              />
+            </div>
             {/* Password Field */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Password</label>

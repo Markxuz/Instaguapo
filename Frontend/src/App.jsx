@@ -22,7 +22,7 @@ function App() {
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/Aboutus" element={<Aboutus />} />
                 
-                {/* Email Verification Route */}
+                // Email Verification Route //
                 <Route path="/verify-email" element={<VerifyEmail />} />
 
                 // Protect Mainpage //

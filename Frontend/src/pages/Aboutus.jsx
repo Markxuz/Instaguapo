@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 function Aboutus() {
     return (
         <div className="min-h-screen bg-gray-100">
-          {/* Navbar */}
           <nav className="bg-white shadow-md">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
               <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
