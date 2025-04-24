@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { IoMenu, IoClose } from "react-icons/io5"; // Import icons for mobile menu
+import { IoMenu, IoClose } from "react-icons/io5";
 
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
