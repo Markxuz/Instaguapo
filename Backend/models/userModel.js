@@ -2,7 +2,7 @@ const db = require ('../config/db');
 
 const createUser = (user, callback) => {
     const sql = 'INSERT INTO User (FullName, Password, Email, PhoneNumber, VerificationCode) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [user.fullname, user.password, user.email, user.phonenumber, user.verificationcode], callback);
+    db.query(sql, [user.fullname, user.password, user.email, user.phonenumber, user.VerificationCode], callback);
   };
   
   const findUserByEmail = (email, callback) => {
