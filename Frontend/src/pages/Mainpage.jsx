@@ -12,7 +12,7 @@ function Mainpage() {
               <div className="flex items-center space-x-4">
                 {/* Navbar Links */}
                 <ul className="flex space-x-6">
-                  <li><Link to="/mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
+                  <li><Link to="/Mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
                   <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
                   <li><a href="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</a></li>
                   <li><a href="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</a></li>
