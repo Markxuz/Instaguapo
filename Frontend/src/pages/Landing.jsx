@@ -1,43 +1,38 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { IoMenu, IoClose } from "react-icons/io5";
+
 
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">InstaGuapo</h1>
-
-          {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-6">
-            <li><Link to="/Login" className="text-gray-600 hover:text-gray-800 px-3 py-2">Login</Link></li>
-          </ul>
-
-          {/* Mobile Menu Toggle */}
-          <button onClick={toggleMenu} className="md:hidden text-gray-700 focus:outline-none">
-            {isMenuOpen ? <IoClose size={30} /> : <IoMenu size={30} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white shadow-md py-4">
-            <ul className="text-center">
-              <li><Link to="/" className="block py-2 text-gray-600 hover:text-gray-800" onClick={toggleMenu}>Home</Link></li>
-              <li><Link to="/Login" className="block py-2 text-gray-600 hover:text-gray-800" onClick={toggleMenu}>Login</Link></li>
-            </ul>
-          </div>
-        )}
-      </nav>
+          {/* Navbar */}
+          <nav className="bg-white shadow-md">
+            <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+              <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
+              <div className="flex items-center space-x-4">
+                {/* Navbar Links */}
+                <ul className="flex space-x-6">
+                  <li><Link to="/Login" className="text-gray-600 hover:text-gray-800">Login</Link></li>
+                  <li><Link to="/Signup" className="text-gray-600 hover:text-gray-800">Signup</Link></li>
+                </ul>
+                {/* Search Bar */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  />
+                  <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                    🔍
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>  
 
       {/* Hero Section */}
       <section className="relative bg-cover bg-center h-[400px] sm:h-[500px]" style={{ backgroundImage: "url('https://via.placeholder.com/1200x500')" }}>

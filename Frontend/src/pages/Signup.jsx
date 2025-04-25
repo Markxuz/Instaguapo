@@ -7,6 +7,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");  // Added missing state
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
@@ -18,7 +19,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password || !confirmPassword) {
+    if (!username || !email || !password || !confirmPassword || !phonenumber) {
       setError("All fields are required!");
       return;
     }
@@ -36,13 +37,13 @@ function Signup() {
       const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ FullName, email, password }),
+        body: JSON.stringify({ username, email, password, phonenumber }),  // Use correct state names
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
+        throw new Error(data.message || "Signup failed. Please try again.");
       }
 
       setSuccessMessage("Signup successful! A verification email has been sent. Please check your email.");
@@ -118,6 +119,7 @@ function Signup() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600"
               />
             </div>
+
             {/* Password Field */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Password</label>
