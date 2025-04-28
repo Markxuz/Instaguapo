@@ -19,7 +19,7 @@ function App() {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Signup" element={<Signup />} />
 
-                // Protect Mainpage  Using ProtectedRoute //
+                // Protect Mainpage  Using ProtectedRoute
                 <Route path="/Mainpage" element={<Mainpage/>} />
                 <Route path="/Collection" element={<Collection/>} />
                 <Route path="/Reservation" element={<Reservation/>} />

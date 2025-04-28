@@ -5,19 +5,19 @@ function Mainpage() {
 
   return (
         <div className="min-h-screen bg-gray-100">
-          {/* Navbar */}
+          //Navbar
           <nav className="bg-white shadow-md">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
               <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
               <div className="flex items-center space-x-4">
-                {/* Navbar Links */}
+                //Links
                 <ul className="flex space-x-6">
                   <li><Link to="/mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
                   <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
                   <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
                   <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
                 </ul>
-                {/* Search Bar */}
+                //Search Bar not working yet
                 <div className="relative">
                   <input
                     type="text"
@@ -32,7 +32,7 @@ function Mainpage() {
             </div>
           </nav>
   
-        {/* Hero Section */}
+        //Hero Section
         <section className="relative bg-cover bg-center h-[500px]" style={{ backgroundImage: "url('https://via.placeholder.com/1200x500')" }}>
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center text-white px-6">
             <h1 className="text-2xl md:text-4xl font-bold">Rent Perfect Formal Wear for Your Special Occasions</h1>
@@ -43,7 +43,7 @@ function Mainpage() {
           </div>
         </section>
 
-        {/* Featured Items Section */}
+        //Featured Items
           <section className="container mx-auto px-6 py-12">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center md:text-left">Featured Items</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -62,7 +62,7 @@ function Mainpage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      //How It Works
       <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">How It Works</h2>
@@ -77,23 +77,23 @@ function Mainpage() {
         </div>
       </section>
 
-      {/* Footer */}
+      //Footer
       <footer className="bg-gray-800 text-white py-6">
         <div className="container mx-auto px-6 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* About Us */}
+            //About Us
             <div>
               <h3 className="text-lg font-bold">About Us</h3>
               <p className="text-sm mt-2">Your trusted formal wear rental service since 2019.</p>
             </div>
-            {/* Contact */}
+            //contact
             <div>
               <h3 className="text-lg font-bold">Contact</h3>
               <p className="text-sm mt-2">0926-820-8475 / 0915-386-8022</p>
               <p className="text-sm">instaguapo@email.com</p>
               <p className="text-sm">560 JM Loyola Street, Carmona, Philippines, 4116</p>
             </div>
-            {/* Follow Us */}
+            //Follow Us
             <div>
               <h3 className="text-lg font-bold">Follow Us</h3>
               <div className="flex justify-center space-x-4 mt-2">

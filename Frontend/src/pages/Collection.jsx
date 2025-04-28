@@ -10,19 +10,19 @@ function Collection() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
+      //Navbar
       <nav className="bg-white shadow-md">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
           <div className="flex items-center space-x-4">
-            {/* Navbar Links */}
+            //Links
             <ul className="flex space-x-6">
               <li><Link to="/Mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
               <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
               <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
               <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
             </ul>
-            {/* Search Bar */}
+            //Search Bar not working yet
             <div className="relative">
               <input
                 type="text"
@@ -37,7 +37,7 @@ function Collection() {
         </div>
       </nav>
 
-      {/* Collection Sections */}
+      //Collection
       <div className="container mx-auto px-6 py-12">
         {categories.map((category, index) => (
           <section key={index} className="mb-12">
