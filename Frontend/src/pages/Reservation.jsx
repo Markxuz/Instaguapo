@@ -11,10 +11,10 @@ function Reservation() {
               <div className="flex items-center space-x-4">
                 {/* Navbar Links */}
                 <ul className="flex space-x-6">
-                  <li><Link to="/mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
+                  <li><Link to="/Mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
                   <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
-                  <li><a href="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</a></li>
-                  <li><a href="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</a></li>
+                  <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
+                  <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
                 </ul>
                 {/* Search Bar */}
                 <div className="relative">
@@ -50,6 +50,7 @@ function Reservation() {
                             <input type="date" id="date" className="w-full border border-gray-300 rounded-lg px-4 py-2" required />
                         </div>
                         <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">Submit Reservation</button>
+                        
                     </form>
                 </section>
         </div>

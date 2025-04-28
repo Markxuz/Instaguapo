@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const sendVerificationEmail = require("../utils/mailer");
 
 const signup = async (req, res) => {
   const { fullname, email, password, phonenumber } = req.body;
@@ -17,11 +18,19 @@ const signup = async (req, res) => {
         phonenumber,
         VerificationCode,
       },
-      (err, result) => {
+      async (err, result) => {
         if (err) return res.status(500).json({ message: "Database error", err });
 
         console.log("Verification code:", VerificationCode);
-        res.status(200).json({ message: "Please verify your account using the code sent to your email!" });
+        try{
+          await sendVerificationEmail(email, VerificationCode);
+          res.status(200).json({ message: "Please verify your account using the code sent to your email!" });
+        } catch (emailErr) {
+          console.error(emailErr);
+          return res.status(500).json({ message: "Error sending verification email", emailErr });
+        }
+
+        
       }
     );
   } catch (err) {

@@ -10,10 +10,10 @@ function Aboutus() {
               <div className="flex items-center space-x-4">
                 {/* Navbar Links */}
                 <ul className="flex space-x-6">
-                  <li><Link to="/mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
+                  <li><Link to="/Mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
                   <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
-                  <li><a href="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</a></li>
-                  <li><a href="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</a></li>
+                  <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
+                  <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
                 </ul>
                 {/* Search Bar */}
                 <div className="relative">
@@ -74,7 +74,7 @@ function Aboutus() {
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">Follow Us</h3>
                 <div className="flex justify-center md:justify-start space-x-6">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/share/1DPxfvuJHC/?mibextid=wwXIfr"
                     className="text-gray-600 hover:text-gray-800 text-2xl"
                   >
                     <i className="fab fa-facebook"></i> {/* Replace with actual icons */}

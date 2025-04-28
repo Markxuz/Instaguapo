@@ -8,7 +8,7 @@ import Aboutus from "./pages/Aboutus";
 import Mainpage from "./pages/Mainpage";
 import Reservation from "./pages/Reservation";
 import ProtectedRoute from "./components/ProtectedRoute";
-import VerifyEmail from "./pages/VerifyEmail"; 
+ 
 
 function App() {
     return (
@@ -16,17 +16,14 @@ function App() {
             
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/Collection" element={<Collection />} />
-                <Route path="/Reservation" element={<Reservation />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Signup" element={<Signup />} />
-                <Route path="/Aboutus" element={<Aboutus />} />
-                
-                // Email Verification Route //
-                <Route path="/verify-email" element={<VerifyEmail />} />
 
-                // Protect Mainpage //
-                <Route path="/Mainpage" element={<ProtectedRoute><Mainpage /></ProtectedRoute>} />
+                // Protect Mainpage  Using ProtectedRoute //
+                <Route path="/Mainpage" element={<Mainpage/>} />
+                <Route path="/Collection" element={<Collection/>} />
+                <Route path="/Reservation" element={<Reservation/>} />
+                <Route path="/Aboutus" element={<Aboutus/>} />
             </Routes>
         </Router>
     );

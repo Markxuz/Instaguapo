@@ -17,10 +17,10 @@ function Collection() {
           <div className="flex items-center space-x-4">
             {/* Navbar Links */}
             <ul className="flex space-x-6">
-              <li><Link to="/mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
+              <li><Link to="/Mainpage" className="text-gray-600 hover:text-gray-800">Home</Link></li>
               <li><Link to="/collection" className="text-gray-600 hover:text-gray-800">Collection</Link></li>
-              <li><a href="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</a></li>
-              <li><a href="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</a></li>
+              <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
+              <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
             </ul>
             {/* Search Bar */}
             <div className="relative">
@@ -53,9 +53,11 @@ function Collection() {
                   </div>
                   <h3 className="mt-4 text-lg font-bold text-gray-800">{item}</h3>
                   <p className="text-gray-600">PHP1200/day</p>
+                  <Link to= "/Reservation">
                   <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                     Reserve Now
                   </button>
+                  </Link>
                 </div>
               ))}
             </div>
