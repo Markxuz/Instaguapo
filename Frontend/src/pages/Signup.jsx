@@ -60,7 +60,7 @@ function Signup() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      //Navbar
+      {/* Navbar */}
       <nav className="bg-white shadow-md">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
@@ -75,7 +75,7 @@ function Signup() {
         </div>
       </nav>
 
-      //Signup Form
+      {/* Signup */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
           <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
@@ -84,7 +84,7 @@ function Signup() {
           {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
 
           <form onSubmit={handleSignup}>
-            //Username
+            {/* Username */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Full Name</label>
               <input
@@ -96,7 +96,7 @@ function Signup() {
               />
             </div>
 
-            // Email
+            {/* Email */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Email</label>
               <input
@@ -108,7 +108,7 @@ function Signup() {
               />
             </div>
             
-            //Phone Number
+            {/* Phonenumber */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
               <input
@@ -120,7 +120,7 @@ function Signup() {
               />
             </div>
 
-            //Password
+            {/* Password */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Password</label>
               <div className="relative">
@@ -141,7 +141,7 @@ function Signup() {
               </div>
             </div>
 
-            //Confirm Password
+            {/* Confirm Password */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
               <div className="relative">
@@ -162,14 +162,14 @@ function Signup() {
               </div>
             </div>
 
-            //Have an account field
+            {/* Already have an account */}
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600">
                 Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
               </p>
             </div>
 
-            //Signup button
+            {/* Signup button */}
             <button
               type="submit"
               className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800"

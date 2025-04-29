@@ -52,7 +52,7 @@ function Collection() {
                     <span className="text-gray-500">Product Image</span>
                   </div>
                   <h3 className="mt-4 text-lg font-bold text-gray-800">{item}</h3>
-                  <p className="text-gray-600">PHP1200/day</p>
+                  <p className="text-gray-600">₱1200/day</p>
                   <Link to= "/Reservation">
                   <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                     Reserve Now

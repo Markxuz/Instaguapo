@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Aboutus from "./pages/Aboutus";
 import Mainpage from "./pages/Mainpage";
 import Reservation from "./pages/Reservation";
+import Forgotpass from "./pages/Passcode";
 import ProtectedRoute from "./components/ProtectedRoute";
  
 
@@ -18,6 +19,8 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Signup" element={<Signup />} />
+                <Route path="/Passcode" element={<Forgotpass />} />
+                
 
                 // Protect Mainpage  Using ProtectedRoute
                 <Route path="/Mainpage" element={<Mainpage/>} />

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 function Mainpage() {
 
   return (
@@ -33,12 +35,24 @@ function Mainpage() {
           </nav>
   
         {/* Hero Section */}
-        <section className="relative bg-cover bg-center h-[500px]" style={{ backgroundImage: "url('https://via.placeholder.com/1200x500')" }}>
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center text-white px-6">
+        <section
+          className="relative bg-cover bg-center h-[500px]"
+          style={{
+            backgroundImage: "url('images/background_resized.jpg')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom"
+          }}
+        >
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <h1 className="text-2xl md:text-4xl font-bold">Rent Perfect Formal Wear for Your Special Occasions</h1>
-            <p className="mt-4 text-sm md:text-lg">Browse our collection of designer suits, dresses, and accessories. Reserve now for your upcoming events.</p>
+            <p className="mt-4 text-sm md:text-lg">
+              Browse our collection of designer suits, dresses, and accessories. Reserve now for your upcoming events.
+            </p>
             <Link to="/Collection">
-              <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Browse Collection</button>
+              <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Browse Collection
+              </button>
             </Link>
           </div>
         </section>
@@ -53,7 +67,7 @@ function Mainpage() {
                     <span className="text-gray-500">Product Image</span>
                   </div>
                 <h3 className="mt-4 text-lg font-bold text-gray-800">Classic Black Tuxedo</h3>
-                  <p className="text-gray-600">PHP1200/day</p>
+                  <p className="text-gray-600">₱/day</p>
                   <Link to="/Reservation">
                   <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full">Reserve Now</button>
                   </Link>
