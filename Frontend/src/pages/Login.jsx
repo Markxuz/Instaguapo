@@ -30,7 +30,7 @@ function Login() {
         return;
       }
 
-      if (user.isVerified) {
+      if (!user.IsVerified) {
         setErrorMessage("Please verify your email before logging in.");
         setLoading(false);
         return;

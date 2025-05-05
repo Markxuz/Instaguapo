@@ -11,8 +11,8 @@ const VerifyEmail = () => {
     const handleVerify = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:5000/api/verify-code", { email, code });
-            setMessage(response.data.message);
+            const response = await axios.post("http://localhost:5000/api/users/verify", { email, code });
+            setMessage(response.data.message || "Verification successful!");
             setTimeout(() => navigate("/login"), 2000); // Redirect to login after success
         } catch (error) {
             setMessage(error.response?.data?.message || "Verification failed. Try again.");

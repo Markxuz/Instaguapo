@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");  // Added missing state
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
@@ -19,13 +19,23 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password || !confirmPassword || !phonenumber) {
-      setError("All fields are required!");
+    if (!fullname || !email || !password || !confirmPassword || !phonenumber) {
+      setError("All fields are required.");
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!/^\d{11}$/.test(phonenumber)) {
+      setError("Phone number must be 11 digits.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      setError("Passwords do not match.");
       return;
     }
 
@@ -34,10 +44,10 @@ function Signup() {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch("http://localhost:5000/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, phonenumber }),  // Use correct state names
+        body: JSON.stringify({ fullname, email, password, phonenumber }),
       });
 
       const data = await response.json();
@@ -46,11 +56,9 @@ function Signup() {
         throw new Error(data.message || "Signup failed. Please try again.");
       }
 
-      setSuccessMessage("Signup successful! A verification email has been sent. Please check your email.");
-      
-      // Redirect to verification page after 3 seconds
-      setTimeout(() => navigate("/verify-email"), 3000);
-      
+      setSuccessMessage("Signup successful! Please check your email for the verification code.");
+      setTimeout(() => navigate("/VerifyEmail"), 3000);
+
     } catch (err) {
       setError(err.message);
     } finally {
@@ -65,17 +73,13 @@ function Signup() {
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
           <ul className="flex space-x-6">
-            <li>
-              <Link to="/" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition duration-200">Home</Link>
-            </li>
-            <li>
-              <Link to="/login" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition duration-200">Login</Link>
-            </li>
+            <li><Link to="/" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition">Home</Link></li>
+            <li><Link to="/login" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition">Login</Link></li>
           </ul>
         </div>
       </nav>
 
-      {/* Signup */}
+      {/* Signup Form */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
           <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
@@ -84,14 +88,14 @@ function Signup() {
           {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
 
           <form onSubmit={handleSignup}>
-            {/* Username */}
+            {/* Full Name */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Full Name</label>
               <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Enter your full name"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600"
               />
             </div>
@@ -107,8 +111,8 @@ function Signup() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600"
               />
             </div>
-            
-            {/* Phonenumber */}
+
+            {/* Phone Number */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
               <input
@@ -162,20 +166,19 @@ function Signup() {
               </div>
             </div>
 
-            {/* Already have an account */}
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600">
-                Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
+                Already have an account?{" "}
+                <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
               </p>
             </div>
 
-            {/* Signup button */}
             <button
               type="submit"
               className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800"
               disabled={loading}
             >
-              {loading ? "Signing up..." : "Sign up"}
+              {loading ? "Signing up..." : "Sign Up"}
             </button>
           </form>
         </div>
