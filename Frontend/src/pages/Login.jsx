@@ -21,7 +21,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const response = await axios.post("http://localhost:5000/api/users/login", { email, password });
       const user = response.data.user;
 
       if (!user) {

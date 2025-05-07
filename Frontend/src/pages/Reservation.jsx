@@ -16,17 +16,6 @@ function Reservation() {
                   <li><Link to="/reservation" className="text-gray-600 hover:text-gray-800">Reservation</Link></li>
                   <li><Link to="/aboutus" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
                 </ul>
-                {/* Search Bar */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  />
-                  <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
-                    🔍
-                  </button>
-                </div>
               </div>
             </div>
           </nav>        
