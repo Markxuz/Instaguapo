@@ -19,5 +19,19 @@ const sendVerificationEmail = (to, code) => {
 
   return transporter.sendMail(mailOptions);
 };
+const sendPasswordResetEmail = (to, resetLink) => {
+  const mailOptions = {
+    from: '"InstaGuapo" <your-email@gmail.com>',
+    to,
+    subject: 'Password Reset Request',
+    html: `
+      <p>You requested a password reset. Click the link below:</p>
+      <a href="${resetLink}">Reset Password</a>
+      <p>Link expires in 1 hour.</p>
+    `
+  };
+  return transporter.sendMail(mailOptions);
+};
 
 module.exports = { sendVerificationEmail };
+module.exports = { sendVerificationEmail, sendPasswordResetEmail };

@@ -87,9 +87,66 @@ const loginUser = async (req, res) => {
     res.status(200).json({ message: "Login successful", token, user });
   });
 };
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  
+  try {
+    // 1. Check if user exists
+    User.findUserByEmail(email, async (err, results) => {
+      if (err || results.length === 0) {
+        return res.status(404).json({ message: "Email not found" });
+      }
+
+      // 2. Generate reset token (expires in 1 hour)
+      const resetToken = crypto.randomBytes(20).toString('hex');
+      const resetTokenExpiry = Date.now() + 3600000; // 1 hour
+
+      // 3. Save token to DB
+      User.updateResetToken(email, resetToken, resetTokenExpiry, (err) => {
+        if (err) return res.status(500).json({ message: "Database error" });
+
+        // 4. Send email with reset link
+        const resetLink = `http://yourfrontend.com/reset-password?token=${resetToken}`;
+        sendPasswordResetEmail(email, resetLink); // You'll need to implement this in mailer.js
+        
+        res.status(200).json({ message: "Password reset link sent to email" });
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    // 1. Find user by token and check expiry
+    User.findByResetToken(token, (err, user) => {
+      if (err || !user || new Date(user.resetTokenExpiry) < new Date()) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+      }
+
+      // 2. Hash new password
+      bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+        if (err) return res.status(500).json({ message: "Error hashing password" });
+
+        // 3. Update password and clear token
+        User.updatePassword(user.email, hashedPassword, (err) => {
+          if (err) return res.status(500).json({ message: "Database error" });
+          res.status(200).json({ message: "Password updated successfully" });
+        });
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 module.exports = {
   signup,
   verifyUser,
   loginUser,
+  forgotPassword,
+  resetPassword,
 };

@@ -8,7 +8,9 @@ import Aboutus from "./pages/Aboutus";
 import Mainpage from "./pages/Mainpage";
 import Reservation from "./pages/Reservation";
 import Forgotpass from "./pages/Passcode";
-import VerifyEmail from "./pages/VerifyEmail";
+import VerifyEmail from "./components/VerifyEmail";
+import ResetPassword from "./components/Resetpassword";
+
 import ProtectedRoute from "./components/ProtectedRoute";
  
 
@@ -22,6 +24,7 @@ function App() {
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/Passcode" element={<Forgotpass />} />
                 <Route path="/VerifyEmail" element={<VerifyEmail />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 
 
                 // Protect Mainpage  Using ProtectedRoute

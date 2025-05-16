@@ -12,6 +12,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotSuccess, setForgotSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,14 +47,33 @@ function Login() {
     }
   };
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     if (!forgotEmail) {
       setForgotError("Email is required.");
       return;
     }
-
-    // Simulate an error when sending the code
-    setForgotError("Invalid Email.");
+    if (!/^\S+@\S+\.\S+$/.test(forgotEmail)) {
+      setForgotError("Please enter a valid email address");
+      return;
+    }
+  
+    try {
+      setForgotLoading(true);
+      setForgotError("");
+      const response = await axios.post("http://localhost:5000/api/users/forgot-password", {
+        email: forgotEmail
+      });
+      
+      setForgotSuccess(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setForgotSuccess(false);
+      }, 2000);
+    } catch (error) {
+      setForgotError(error.response?.data?.message || "Error sending reset link");
+    } finally {
+      setForgotLoading(false);
+    }
   };
 
   return (
@@ -127,31 +148,51 @@ function Login() {
         </div>
       </div>
 
-      {/* Forgot Password Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h3 className="text-xl font-bold mb-4">Forgot Password</h3>
-            <p className="text-gray-600 mb-4">Enter your email to reset your password.</p>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={forgotEmail}
-              onChange={(e) => {
-                setForgotEmail(e.target.value);
-                setForgotError(""); // Clear error when user types
-              }}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            {forgotError && <p className="text-red-500 text-sm mb-4">{forgotError}</p>}
-            <div className="flex justify-end space-x-4">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Cancel</button>
-              <button onClick={handleForgotPassword} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Send Code</button>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+              <h3 className="text-xl font-bold mb-4">Forgot Password</h3>
+              
+              {forgotSuccess ? (
+                <p className="text-green-500 mb-4">Reset link sent successfully!</p>
+              ) : (
+                <>
+                  <p className="text-gray-600 mb-4">Enter your email to reset your password.</p>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={forgotEmail}
+                    onChange={(e) => {
+                      setForgotEmail(e.target.value);
+                      setForgotError("");
+                    }}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                  {forgotError && <p className="text-red-500 text-sm mb-4">{forgotError}</p>}
+                  <div className="flex justify-end space-x-4">
+                    <button 
+                      onClick={() => setIsModalOpen(false)} 
+                      className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+                      disabled={forgotLoading}
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      onClick={handleForgotPassword} 
+                      className={`px-4 py-2 text-white rounded-lg ${
+                        forgotLoading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+                      }`}
+                      disabled={forgotLoading}
+                    >
+                      {forgotLoading ? "Sending..." : "Send Link"}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

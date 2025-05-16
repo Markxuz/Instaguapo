@@ -13,8 +13,40 @@ const createUser = (user, callback) => {
     const sql = 'UPDATE User SET IsVerified = 1 WHERE Email = ?';
     db.query(sql, [email], callback);
   };
+  // 1. Store reset token
+  const updateResetToken = (email, token, expiry, callback) => {
+  db.query(
+    'UPDATE User SET resetToken = ?, resetTokenExpiry = ? WHERE Email = ?',
+    [token, expiry, email],
+    callback
+  );
+};
+
+// 2. Find user by valid token
+const findByResetToken = (token, callback) => {
+  db.query(
+    'SELECT * FROM User WHERE resetToken = ? AND resetTokenExpiry > NOW()',
+    [token],
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results[0] || null);
+    }
+  );
+};
+
+// 3. Update password and clear token
+const updatePassword = (email, newPassword, callback) =>  {
+  db.query(
+    'UPDATE User SET Password = ?, resetToken = NULL, resetTokenExpiry = NULL WHERE Email = ?',
+    [newPassword, email],
+    callback
+  );
+}
 module.exports = {
     createUser,
     findUserByEmail,
-    markAsVerified
-};
+    markAsVerified,
+    updateResetToken,
+    findByResetToken,
+    updatePassword
+  };
