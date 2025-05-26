@@ -14,19 +14,19 @@ const createUser = (user, callback) => {
     db.query(sql, [email], callback);
   };
   // 1. Store reset token
-  const updateResetToken = (email, token, expiry, callback) => {
+  const updateResetToken = (email, reset, Expiry, callback) => {
   db.query(
     'UPDATE User SET resetToken = ?, resetTokenExpiry = ? WHERE Email = ?',
-    [token, expiry, email],
+    [reset, Expiry, email],
     callback
   );
 };
 
 // 2. Find user by valid token
-const findByResetToken = (token, callback) => {
+const findByResetToken = (reset, callback) => {
   db.query(
     'SELECT * FROM User WHERE resetToken = ? AND resetTokenExpiry > NOW()',
-    [token],
+    [reset],
     (err, results) => {
       if (err) return callback(err);
       callback(null, results[0] || null);
