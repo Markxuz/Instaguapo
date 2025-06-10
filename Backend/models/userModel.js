@@ -14,18 +14,26 @@ const createUser = (user, callback) => {
     db.query(sql, [email], callback);
   };
   // 1. Store reset token
-  const updateResetToken = (email, reset, Expiry, callback) => {
+ const updateResetToken = (email, reset, Expiry, callback) => {
+  console.log("Updating reset token for:", email);
+  console.log("Token:", reset);
+  console.log("Expiry:", Expiry);
+
   db.query(
-    'UPDATE User SET resetToken = ?, resetTokenExpiry = ? WHERE Email = ?',
+    'UPDATE User SET resetCode = ?, resetCodeExpiry = ? WHERE Email = ?',
     [reset, Expiry, email],
-    callback
+    (err, results) => {
+      console.log("DB error:", err);
+      console.log("DB result:", results);
+      callback(err, results);
+    }
   );
 };
 
 // 2. Find user by valid token
 const findByResetToken = (reset, callback) => {
   db.query(
-    'SELECT * FROM User WHERE resetToken = ? AND resetTokenExpiry > NOW()',
+    'SELECT * FROM User WHERE resetCode = ? AND resetCodeExpiry > NOW()',
     [reset],
     (err, results) => {
       if (err) return callback(err);
@@ -37,16 +45,23 @@ const findByResetToken = (reset, callback) => {
 // 3. Update password and clear token
 const updatePassword = (email, newPassword, callback) =>  {
   db.query(
-    'UPDATE User SET Password = ?, resetToken = NULL, resetTokenExpiry = NULL WHERE Email = ?',
+    'UPDATE User SET Password = ?, resetCode = NULL, resetCodeExpiry = NULL WHERE Email = ?',
     [newPassword, email],
     callback
   );
 }
+
+const saveResetCode = (email, code, expiry, callback) => {
+  const sql = 'UPDATE User SET resetCode = ?, resetCodeExpiry = ? WHERE Email = ?';
+  db.query(sql, [code, expiry, email], callback);
+};
+
 module.exports = {
     createUser,
     findUserByEmail,
     markAsVerified,
     updateResetToken,
     findByResetToken,
-    updatePassword
+    updatePassword,
+    saveResetCode
   };

@@ -101,9 +101,9 @@ function Mainpage() {
         >
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <h1 className="text-2xl md:text-4xl font-bold">Rent Perfect Formal Wear for Your Special Occasions</h1>
-            <p className="mt-4 text-sm md:text-lg">
-              Browse our collection of designer suits, dresses, and accessories. Reserve now for your upcoming events.
-            </p>
+            <h1 className="mt-4 text-2x1 md:text-4x1 font-bold">
+              We Offer 50% Down Payment for Reservations!
+            </h1>
             <Link to="/Collection">
               <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Browse Collection

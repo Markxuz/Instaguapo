@@ -16,7 +16,7 @@ function Aboutus() {
     { title: 'Barong', items: Array(4).fill('Traditional Barong Tagalog') },
   ];
 
-   return (
+    return (
      <div className="min-h-screen bg-gray-100">
        {/* Navbar */}
        <nav className="bg-white shadow-md">

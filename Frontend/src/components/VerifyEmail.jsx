@@ -44,7 +44,7 @@ const VerifyEmail = () => {
                 >
                     Verify
                 </button>
-                {message && <p className="text-red-500 mt-2">{message}</p>}
+                {message && <p className="text-green-500 mt-2">{message}</p>}
             </div>
         </div>
     );

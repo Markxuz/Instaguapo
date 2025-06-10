@@ -148,16 +148,25 @@ function Login() {
         </div>
       </div>
 
-      {isModalOpen && (
+     {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white rounded-lg shadow-lg p-6 w-96">
               <h3 className="text-xl font-bold mb-4">Forgot Password</h3>
-              
+
               {forgotSuccess ? (
-                <p className="text-green-500 mb-4">Reset link sent successfully!</p>
+                <div className="text-center">
+                  <p className="text-green-500 mb-4">Code sent! Check your email.</p>
+                  <Link
+                    to="/reset-password"
+                    onClick={() => setIsModalOpen(false)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Go to Reset Password →
+                  </Link>
+                </div>
               ) : (
                 <>
-                  <p className="text-gray-600 mb-4">Enter your email to reset your password.</p>
+                  <p className="text-gray-600 mb-4">Enter your email to receive a reset code.</p>
                   <input
                     type="email"
                     placeholder="Enter your email"
@@ -170,6 +179,7 @@ function Login() {
                     required
                   />
                   {forgotError && <p className="text-red-500 text-sm mb-4">{forgotError}</p>}
+
                   <div className="flex justify-end space-x-4">
                     <button 
                       onClick={() => setIsModalOpen(false)} 
@@ -185,7 +195,7 @@ function Login() {
                       }`}
                       disabled={forgotLoading}
                     >
-                      {forgotLoading ? "Sending..." : "Send Link"}
+                      {forgotLoading ? "Sending..." : "Send Code"}
                     </button>
                   </div>
                 </>
@@ -193,6 +203,7 @@ function Login() {
             </div>
           </div>
         )}
+
     </div>
   );
 }

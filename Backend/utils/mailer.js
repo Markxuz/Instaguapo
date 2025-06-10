@@ -1,37 +1,33 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // Gmail accounts only
+  service: 'gmail', 
   auth: {
-    user: 'markaldas2002@gmail.com',     
-    pass: 'vaqt mlvj qvlq tacr',         // app password on Gmail
+    user: process.env.EMAIL, 
+    pass: process.env.EMAIL_PASS ,       
   },
 });
 
 const sendVerificationEmail = (to, code) => {
-  const mailOptions = {
+  return transporter.sendMail ({
     from: '"Instaguapo" <markaldas2002@gmail.com>',
     to,
     subject: 'Verify Your Account',
     text: `Your verification code is: ${code}`,
     html: `<h3>Your verification code is:</h3><p><b>${code}</b></p>`,
-  };
+  });
 
-  return transporter.sendMail(mailOptions);
 };
-const sendPasswordResetEmail = (to, resetLink) => {
+
+const sendPasswordResetEmail = (to, code) => {
   const mailOptions = {
-    from: '"InstaGuapo" <your-email@gmail.com>',
+    from: '"Instaguapo" <your@email>',
     to,
-    subject: 'Password Reset Request',
-    html: `
-      <p>You requested a password reset. Click the link below:</p>
-      <a href="${resetLink}">Reset Password</a>
-      <p>Link expires in 1 hour.</p>
-    `
+    subject: 'Password Reset Code',
+    html: `<p>Your password reset code is: <b>${code}</b></p>`
   };
   return transporter.sendMail(mailOptions);
 };
 
-module.exports = { sendVerificationEmail };
 module.exports = { sendVerificationEmail, sendPasswordResetEmail };
