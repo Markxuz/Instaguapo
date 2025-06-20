@@ -1,78 +1,81 @@
+import React from 'react';
 import Navbar from '../components/Navbar';
 
 function Aboutus() {
     return (
-     <div className="min-h-screen bg-gray-100">
-        <Navbar />
-          {/* About Us Section */}
-          <section className="container mx-auto px-6 py-12">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-800">About Us</h2>
-            </div>
-            <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-12">
-              {/* Image */}
-              <div className="w-full md:w-1/2">
-                <img
-                  src="https://via.placeholder.com/600x400"
-                  alt="InstaGuapo Store"
-                  className="rounded-lg shadow-md"
-                />
-              </div>
-              {/* About Us Text */}
-              <div className="w-full md:w-1/2 text-center md:text-left">
-                <p className="text-gray-700 text-lg">
-                  We are dedicated to providing the best reservation experience for
-                  our customers. With years of expertise in the industry, we ensure
-                  smooth and hassle-free bookings.
-                </p>
-              </div>
-            </div>
-          </section>
-    
-          {/* Contact Us Section */}
-          <section className="container mx-auto px-6 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Contact Us */}
-              <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Contact Us</h3>
-                <p className="text-gray-700">
-                  📞 0926-820-8475 / 0915-386-8022
-                </p>
-                <p className="text-gray-700">📧 Instaguapo@gmail.com</p>
-                <p className="text-gray-700">
-                  📍 560 JM Loyola Street, Carmona, Philippines, 4116
-                </p>
-              </div>
-              {/* Follow Us */}
-              <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Follow Us</h3>
-                <div className="flex justify-center md:justify-start space-x-6">
-                  <a
-                    href="https://www.facebook.com/share/1DPxfvuJHC/?mibextid=wwXIfr"
-                    className="text-gray-600 hover:text-gray-800 text-2xl"
-                  >
-                    <i className="fab fa-facebook"></i> {/* Replace with actual icons */}
-                    Facebook
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-gray-800 text-2xl"
-                  >
-                    <i className="fab fa-instagram"></i> {/* Replace with actual icons */}
-                    Instagram
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-gray-800 text-2xl"
-                  >
-                    <i className="fab fa-twitter"></i> {/* Replace with actual icons */}
-                    Twitter
-                  </a>
+        <div className="min-h-screen bg-gray-100">
+            <Navbar />
+
+            <div className="pt-24 container mx-auto px-6 py-8">
+                {/* About Us Section with Image */}
+                <div className="flex flex-col lg:flex-row items-start gap-8 mb-12">
+                    <img 
+                        src="/path/to/your/image.jpg" 
+                        alt="Storefront" 
+                        className="w-full lg:w-1/2 rounded-lg shadow-md"
+                    />
+                    <div className="lg:w-1/2">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4">About Us</h2>
+                        <p className="text-gray-700 mb-4">
+                            At InstaGuapo, we are dedicated to providing a smooth and hassle-free reservation experience. 
+                            With years of industry expertise, we take pride in delivering reliable service and quality 
+                            formal wear for every special occasion. Please note that all reservations are strictly 
+                            non-refundable. We encourage careful selection before finalizing bookings. Your satisfaction 
+                            is our priority, and we look forward to being part of your memorable moments.
+                        </p>
+                    </div>
                 </div>
-              </div>
+
+                {/* Contact and Message Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Contact Us */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                        <div className="space-y-3 text-gray-700">
+                            <p>📞 0926-820-8475 / 09153868022</p>
+                            <p>📧 Instaguapo@gmail.com</p>
+                            <p>📍 560 jm loyola street, Carmona, Philippines, 4116</p>
+                            <p>📸 Instaguapo Fashion Couture</p>
+                        </div>
+                    </div>
+
+                    {/* Message Us */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Message Us</h2>
+                        <form className="space-y-4">
+                            <div>
+                                <div className="mb-1">Name:</div>
+                                <input 
+                                    type="text" 
+                                    className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none"
+                                />
+                            </div>
+                            <div>
+                                <div className="mb-1 bg">Email Address</div>
+                                <input 
+                                    type="email" 
+                                    className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none"
+                                />
+                            </div>
+                            <div>
+                                <div className="mb-1">Message</div>
+                                <textarea 
+                                    className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none"
+                                    rows="4"
+                                ></textarea>
+                            </div>
+                            <button 
+                                type="submit" 
+                                className="px-4 py-2 bg-black text-white hover:bg-gray-800"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </section>
         </div>
-      );
+    );
 }
+
 export default Aboutus;

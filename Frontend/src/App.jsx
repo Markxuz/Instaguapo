@@ -11,6 +11,8 @@ import Forgotpass from "./components/Passcode";
 import VerifyEmail from "./components/VerifyEmail";
 import ResetPassword from "./components/Resetpassword";
 import MyAccount from "./components/MyAccount";
+import Favorites from "./components/Favorites";
+import Rprocess from "./components/Rprocess";
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -32,6 +34,10 @@ function App() {
                     <Route path="/Collection" element={<Collection />} />
                     <Route path="/Reservation" element={<Reservation />} />
                     <Route path="/Aboutus" element={<Aboutus />} />
+                    <Route path="/Rprocess" element={<Rprocess />} />
+                    <Route path="/Favorites" element={<Favorites />} />
+                    
+                    {/* Protect MyAccount Using ProtectedRoute */}
                     
                     <Route path="/MyAccount" element={
                         <ProtectedRoute>
