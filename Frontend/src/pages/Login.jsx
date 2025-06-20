@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import axios from "axios";
+import LandingNav from "../components/LandingNav";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -78,17 +79,8 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">InstaGuapo</h1>
-          <ul className="flex space-x-6">
-            <li><Link to="/" className="text-gray-600 hover:text-gray-800">Home</Link></li>
-            <li><Link to="/signup" className="text-gray-600 hover:text-gray-800">Sign Up</Link></li>
-          </ul>
-        </div>
-      </nav>
-
+      <LandingNav />
+      
       {/* Login Form */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">

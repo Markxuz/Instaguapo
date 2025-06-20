@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import LandingNav from "../components/LandingNav";
 
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,20 +10,7 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
-          <div className="flex items-center space-x-4">
-            {/* Navbar Links */}
-            <ul className="flex space-x-6">
-              <li><Link to="/Login" className="text-gray-600 hover:text-gray-800">Login</Link></li>
-              <li><Link to="/Signup" className="text-gray-600 hover:text-gray-800">Signup</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
+      <LandingNav />
       {/* Hero Section */}
       <section
           className="relative bg-cover bg-center h-[500px]"

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import LandingNav from "../components/LandingNav";
 
 function Signup() {
   const [fullname, setFullName] = useState("");
@@ -68,17 +69,7 @@ function Signup() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-4xl font-bold text-gray-800">InstaGuapo</h1>
-          <ul className="flex space-x-6">
-            <li><Link to="/" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition">Home</Link></li>
-            <li><Link to="/login" className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg transition">Login</Link></li>
-          </ul>
-        </div>
-      </nav>
-
+      <LandingNav />
       {/* Signup Form */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
