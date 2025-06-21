@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 function Reservation() {
+  const navigate = useNavigate();
+
+  const handleNewReservation = () => {
+    navigate('/collection'); // Navigate to collection page
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -9,7 +16,10 @@ function Reservation() {
         {/* Title and Button */}
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Your Reservation</h1>
-          <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+          <button 
+            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+            onClick={handleNewReservation}
+          >
             New Reservation
           </button>
         </div>

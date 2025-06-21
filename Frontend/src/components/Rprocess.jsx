@@ -9,6 +9,7 @@ function Rprocess() {
     const [referenceNumber, setReferenceNumber] = useState('');
     const [showTermsModal, setShowTermsModal] = useState(false);
     const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleContinueClick = () => {
         setShowTermsModal(true);
@@ -17,7 +18,11 @@ function Rprocess() {
     const handleAcceptTerms = () => {
         setAcceptedTerms(true);
         setShowTermsModal(false);
-        // Proceed with reservation submission
+        // Show success message
+        setShowSuccess(true);
+        // Hide success message after 3 seconds
+        setTimeout(() => setShowSuccess(false), 3000);
+        // Here you would typically submit to your backend
         console.log('Reservation submitted with:', {
             pickupDate,
             returnDate,
@@ -124,18 +129,23 @@ function Rprocess() {
 
             {/* Terms & Conditions Modal */}
             {showTermsModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
+                    style={{
+                        backgroundImage: "url('images/background_resized.jpg')",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center bottom"}}>
                     <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">InstaGuapo Terms & Conditions</h2>
                         
                         <div className="text-gray-700 space-y-4 mb-6">
-                            <p>After making a reservation, you must arrive at InstaGuapo two days. 560 JM loyola street, Carmona, Philippines, 4116, within 24 hours. If you do not arrive until three specified time, your reservation will not be proceeded.</p>
+                            <p>After making a reservation, you must arrive at InstaGuapo two days. I work with your new Philippines, club, within a Monet. If you do not arrive until three specified time, your reservation will not be proceeded.</p>
                             
-                            <p>Balance should be paid on the pick-up date and must surrender valid ID upon pickup. InstaGuapo will not release the formal wear without valid ID.</p>
+                            <p>Balance should be paid on the paid date and must assume that all of them prior to instaGuapo will not release the formal user without child.</p>
                             
-                            <p>Pick up time will be at 6 pm onwards on the paid up date.</p>
+                            <p>Find up time will be at 8 pm amounts on the paid up date.</p>
                             
-                            <p>Formal wear has to be returned on the declared date. If the item formal wear will not be returned on said date there would be penalty if 300 pesos per day.</p>
+                            <p>Formal Note has to be returned on the declared date. Forward in terms of any call input from each of the said date there would be penalty if 300 person per day.</p>
                         </div>
                         
                         <div className="flex items-center mb-6">
@@ -167,6 +177,16 @@ function Rprocess() {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* Success Notification */}
+            {showSuccess && (
+                <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center z-50">
+                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Reservation successfully submitted!</span>
                 </div>
             )}
         </div>

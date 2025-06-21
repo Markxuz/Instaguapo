@@ -58,7 +58,12 @@ function Collection() {
 
       {/* Reserve Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-40"
+          style={{
+                backgroundImage: "url('images/background_resized.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[340px] max-w-full p-6 relative">
             {/* Close Button */}
             <button
@@ -71,7 +76,6 @@ function Collection() {
             {/* Modal Content */}
             <div className="flex flex-col items-center">
               <div className="border rounded-lg p-2 mb-2 relative w-48 h-48 flex items-center justify-center">
-                {/* Replace with actual image if available */}
                 <img
                   src=""
                   alt="Product"

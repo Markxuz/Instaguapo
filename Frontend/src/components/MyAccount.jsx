@@ -136,7 +136,12 @@ const MyAccount = () => {
 
       {/* Delete Account Confirmation Modal */}
       {showDeleteAccount && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
+          style={{
+                backgroundImage: "url('images/background_resized.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[370px] max-w-full p-6">
             <div className="flex justify-end mb-4">
               <button 
@@ -172,7 +177,12 @@ const MyAccount = () => {
 
       {/* Change Password Confirmation Modal */}
       {showChangePassword && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
+          style={{
+                backgroundImage: "url('images/background_resized.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[370px] max-w-full p-6">
             <div className="flex justify-end mb-4">
               <button 
@@ -206,7 +216,12 @@ const MyAccount = () => {
 
       {/* Password Change Form Modal */}
       {showPasswordForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
+        style={{
+                backgroundImage: "url('images/background_resized.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[370px] max-w-full p-6">
             <div className="flex items-center mb-6">
               <button 
@@ -258,7 +273,12 @@ const MyAccount = () => {
 
       {/* Settings Modal */}
       {showSettings && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
+        style={{
+                backgroundImage: "url('images/background_resized.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[370px] max-w-full">
             {/* Header */}
             <div className="flex items-center justify-center relative border-b px-4 py-4">

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import axios from "axios";
-import LandingNav from "../components/LandingNav";
+import AdNav from "../components/AdNav";
 
-function Login() {
+function AdLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +24,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", { email, password });
+      const response = await axios.post("http://localhost:5000/api/admin/login", { email, password });
       const user = response.data.user;
 
       if (!user) {
@@ -85,7 +85,7 @@ function Login() {
         backgroundSize: "cover",
         backgroundPosition: "center bottom"
       }}>
-      <LandingNav />
+      <AdNav />
       
       {/* Login Form */}
       <div className="flex-grow flex items-center justify-center">
@@ -206,4 +206,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default AdLogin;

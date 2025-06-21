@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/Landing";
 import Collection from "./pages/Collection";
@@ -13,41 +12,45 @@ import ResetPassword from "./components/Resetpassword";
 import MyAccount from "./components/MyAccount";
 import Favorites from "./components/Favorites";
 import Rprocess from "./components/Rprocess";
-
-
 import ProtectedRoute from "./components/ProtectedRoute";
- 
+
+import AdminLogin from "./pages/AdminLogin";
+import AdminSignup from "./pages/AdminSignup";
 
 function App() {
     return (
         <Router>
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/Login" element={<Login />} />
-                    <Route path="/Signup" element={<Signup />} />
-                    <Route path="/Passcode" element={<Forgotpass />} />
-                    <Route path="/VerifyEmail" element={<VerifyEmail />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                    
-                    {/* Protect Mainpage Using ProtectedRoute */}
-                    <Route path="/Mainpage" element={<Mainpage />} />
-                    <Route path="/Collection" element={<Collection />} />
-                    <Route path="/Reservation" element={<Reservation />} />
-                    <Route path="/Aboutus" element={<Aboutus />} />
-                    <Route path="/Rprocess" element={<Rprocess />} />
-                    <Route path="/Favorites" element={<Favorites />} />
-                    
-                    {/* Protect MyAccount Using ProtectedRoute */}
-                    
-                    <Route path="/MyAccount" element={
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/passcode" element={<Forgotpass />} />
+                <Route path="/verifyemail" element={<VerifyEmail />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+
+
+                <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin-signup" element={<AdminSignup />} />
+
+
+                <Route path="/mainpage" element={<Mainpage />} />
+                <Route path="/collection" element={<Collection />} />
+                <Route path="/reservation" element={<Reservation />} />
+                <Route path="/aboutus" element={<Aboutus />} />
+                <Route path="/rprocess" element={<Rprocess />} />
+                <Route path="/favorites" element={<Favorites />} />
+
+                <Route
+                    path="/myaccount"
+                    element={
                         <ProtectedRoute>
                             <MyAccount />
                         </ProtectedRoute>
-                    } />
-                </Routes>
+                    }
+                />
+            </Routes>
         </Router>
     );
 }
-
 
 export default App;

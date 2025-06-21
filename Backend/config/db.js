@@ -1,4 +1,3 @@
-// This file is responsible for connecting to the MySQL database using the mysql2 package.
 const mysql = require("mysql2");
 require("dotenv").config();
 

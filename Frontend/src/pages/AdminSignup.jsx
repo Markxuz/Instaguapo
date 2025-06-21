@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import LandingNav from "../components/LandingNav";
+import AdNav from "../components/AdNav";
 
-function Signup() {
+function AdSign() {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
@@ -45,7 +45,7 @@ function Signup() {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/signup", {
+      const response = await fetch("http://localhost:5000/api/admin/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email, password, phonenumber }),
@@ -75,7 +75,7 @@ function Signup() {
         backgroundSize: "cover",
         backgroundPosition: "center bottom"
       }}>
-      <LandingNav />
+      <AdNav />
       {/* Signup Form */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
@@ -184,4 +184,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default AdSign;

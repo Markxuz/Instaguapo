@@ -31,18 +31,60 @@ function LandingPage() {
 
       {/* Featured Items */}
       <section className="container mx-auto px-6 py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Featured Items</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {Array(4).fill().map((_, index) => (
-            <div key={index} className="bg-white shadow-md rounded-lg p-4">
-              <div className="h-40 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Product Image</span>
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Featured Items</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[
+              {
+                id: 1,
+                name: "Luxury Blue Ball Gown",
+                price: "₱5000",
+                image: "images/blue.png" 
+              },
+              {
+                id: 2,
+                name: "Luxury Red Ball Gown",
+                price: "₱5000",
+                image: "images/red.png"
+              },
+              {
+                id: 3,
+                name: "Black White Silver Coat",
+                price: "₱2500/",
+                image: "images/black.png"
+              },
+              {
+                id: 4,
+                name: "Navy Blue Full Set",
+                price: "₱3500",
+                image: "images/dblue.png"
+              }
+            ].map((item) => (
+              <div key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = "images/placeholder.jpg";
+                    }}
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-gray-800">{item.name}</h3>
+                  <p className="text-gray-600 my-2">{item.price}</p>
+                  <button 
+                    onClick={openModal} 
+                    className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Reserve Now
+                  </button>
+                </div>
               </div>
-              <h3 className="mt-4 text-lg font-bold text-gray-800">Classic Black Tuxedo</h3>
-              <p className="text-gray-600">₱1200/day</p>
-              <button onClick={openModal} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Reserve Now</button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

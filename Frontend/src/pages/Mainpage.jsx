@@ -32,22 +32,22 @@ function Mainpage() {
 
         {/* Featured Items Section */}
           <section className="container mx-auto px-6 py-12">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center md:text-left">Featured Items</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {Array(4).fill().map((_, index) => (
-                <div key={index} className="bg-white shadow-md rounded-lg p-4">
-                  <div className="h-40 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500">Product Image</span>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Featured Items</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                {Array(4).fill().map((_, index) => (
+                  <div key={index} className="bg-white shadow-md rounded-lg p-4">
+                    <div className="h-40 bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">Product Image</span>
+                    </div>
+                  <h3 className="mt-4 text-lg font-bold text-gray-800">Classic Black Tuxedo</h3>
+                    <p className="text-gray-600">₱/day</p>
+                    <Link to="/Reservation">
+                    <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full">Reserve Now</button>
+                    </Link>
                   </div>
-                <h3 className="mt-4 text-lg font-bold text-gray-800">Classic Black Tuxedo</h3>
-                  <p className="text-gray-600">₱/day</p>
-                  <Link to="/Reservation">
-                  <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full">Reserve Now</button>
-                  </Link>
-                </div>
-          ))}
-        </div>
-      </section>
+                  ))}
+              </div>
+          </section>
 
       {/* How It Works Section */}
       <section className="bg-gray-50 py-12">
