@@ -11,7 +11,7 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <LandingNav />
-      {/* Hero Section */}
+
       <section
           className="relative bg-cover bg-center h-[500px]"
           style={{
@@ -29,7 +29,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Featured Items */}
+  
       <section className="container mx-auto px-6 py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Featured Items</h2>
@@ -88,7 +88,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-96">
@@ -104,7 +103,6 @@ function LandingPage() {
         </div>
       )}
 
-      {/* How It Works */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">How It Works</h2>
@@ -121,7 +119,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+
       <footer className="bg-gray-800 text-white py-6">
         <div className="container mx-auto px-6 text-center">
           <p className="text-sm">Your trusted formal wear rental service since 2019.</p>

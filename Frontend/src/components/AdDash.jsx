@@ -5,10 +5,10 @@ const AdDash = () => {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <AdminNavbar />
-      {/* Header */}
+
       <h1 className="text-3xl font-bold mb-6">InstaGuapo</h1>
       
-      {/* Filters Section */}
+
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Filters</h2>
         <div className="flex space-x-4 mb-6">
@@ -20,7 +20,7 @@ const AdDash = () => {
         <hr className="border-t-2 border-gray-300 my-4" />
       </div>
 
-      {/* Stats Section */}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white p-4 rounded-lg shadow">
           <h3 className="font-semibold mb-2">Total Reservations</h3>
@@ -36,7 +36,7 @@ const AdDash = () => {
         </div>
       </div>
 
-      {/* Recent Reservations Table */}
+
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Recent Reservation</h2>
         <div className="overflow-x-auto">
@@ -104,7 +104,7 @@ const AdDash = () => {
         </div>
       </div>
 
-      {/* Key Rk Section */}
+
       <div className="bg-white p-4 rounded-lg shadow">
         <h2 className="text-xl font-semibold mb-4">Key Rk 2020</h2>
         <div className="flex flex-wrap gap-2 items-center">

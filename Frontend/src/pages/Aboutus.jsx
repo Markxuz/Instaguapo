@@ -7,7 +7,6 @@ function Aboutus() {
             <Navbar />
 
             <div className="pt-24 container mx-auto px-6 py-8">
-                {/* About Us Section */}
                 <div className="flex flex-col lg:flex-row items-start gap-8 mb-12">
                     <img 
                         src="images/aboutus.jpg" 
@@ -27,9 +26,7 @@ function Aboutus() {
                     </div>
                 </div>
 
-                {/* Contact and Message Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Contact Us */}
                     <div>
                         <h2 className="text-2xl font-bold text-black mb-4">Contact Us</h2>
                         <div className="text-lg space-y-3 text-black">
@@ -39,8 +36,6 @@ function Aboutus() {
                             <p>📸 Instaguapo Fashion Couture</p>
                         </div>
                     </div>
-
-                    {/* Message Us */}
                     <div>
                         <h2 className="text-2xl font-bold text-black mb-4">Message Us</h2>
                         <form className="space-y-4">

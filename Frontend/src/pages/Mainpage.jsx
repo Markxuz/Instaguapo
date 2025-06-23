@@ -6,7 +6,6 @@ function Mainpage() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
 
-      {/* Hero Section */}
       <section
         className="relative bg-cover bg-center h-[500px]"
         style={{
@@ -31,7 +30,7 @@ function Mainpage() {
         </div>
       </section>
 
-      {/* Featured Items Section */}
+
       <section className="container mx-auto px-6 py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Featured Items</h2>
@@ -91,7 +90,7 @@ function Mainpage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+
       <section className="bg-white py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">How It Works</h2>
@@ -106,23 +105,23 @@ function Mainpage() {
         </div>
       </section>
 
-      {/* Footer */}
+
       <footer className="bg-gray-800 text-white py-6">
         <div className="container mx-auto px-6 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* About Us */}
+
             <div>
               <h3 className="text-lg font-bold">About Us</h3>
               <p className="text-sm mt-2">Your trusted formal wear rental service since 2019.</p>
             </div>
-            {/* Contact */}
+
             <div>
               <h3 className="text-lg font-bold">Contact</h3>
               <p className="text-sm mt-2">0926-820-8475 / 0915-386-8022</p>
               <p className="text-sm">instaguapo@email.com</p>
               <p className="text-sm">560 JM Loyola Street, Carmona, Philippines, 4116</p>
             </div>
-            {/* Follow Us */}
+ 
             <div>
               <h3 className="text-lg font-bold">Follow Us</h3>
               <div className="flex justify-center space-x-4 mt-2">

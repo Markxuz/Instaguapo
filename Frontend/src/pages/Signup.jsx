@@ -76,7 +76,6 @@ function Signup() {
         backgroundPosition: "center bottom"
       }}>
       <LandingNav />
-      {/* Signup Form */}
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
           <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
@@ -85,7 +84,6 @@ function Signup() {
           {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
 
           <form onSubmit={handleSignup}>
-            {/* Full Name */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Full Name</label>
               <input
@@ -97,7 +95,7 @@ function Signup() {
               />
             </div>
 
-            {/* Email */}
+
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Email</label>
               <input
@@ -109,7 +107,7 @@ function Signup() {
               />
             </div>
 
-            {/* Phone Number */}
+
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
               <input
@@ -121,7 +119,7 @@ function Signup() {
               />
             </div>
 
-            {/* Password */}
+
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Password</label>
               <div className="relative">
@@ -142,7 +140,6 @@ function Signup() {
               </div>
             </div>
 
-            {/* Confirm Password */}
             <div className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
               <div className="relative">

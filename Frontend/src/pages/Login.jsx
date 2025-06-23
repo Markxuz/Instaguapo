@@ -8,8 +8,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState(""); // State for email in the modal
-  const [forgotError, setForgotError] = useState(""); // State for error in the modal
+  const [forgotEmail, setForgotEmail] = useState(""); 
+  const [forgotError, setForgotError] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ function Login() {
         return;
       }
 
-      // Store token & redirect
+
       localStorage.setItem("token", response.data.token);
       navigate("/Mainpage");
     } catch (error) {
@@ -87,7 +87,7 @@ function Login() {
       }}>
       <LandingNav />
       
-      {/* Login Form */}
+ 
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>

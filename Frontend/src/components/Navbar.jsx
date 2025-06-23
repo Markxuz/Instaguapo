@@ -7,7 +7,7 @@ const Navbar = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Mock notification data
+
   const notifications = [
     { id: 1, text: "New collection available", read: false },
     { id: 2, text: "Your reservation is confirmed", read: true },
@@ -19,10 +19,8 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-10">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo on the left */}
         <h1 className="text-2xl font-bold text-gray-800">InstaGuapo.</h1>
 
-        {/* Centered Navigation Links */}
         <div className="hidden md:flex flex-1 justify-center">
           <ul className="flex space-x-6">
             <li><Link to="/mainpage" className="text-black hover:text-blue-600 px-3 py-2">Home</Link></li>
@@ -32,7 +30,6 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Right-side Icons */}
         <div className="flex items-center space-x-4">
           <button 
             onClick={() => navigate('/favorites')} 
@@ -54,7 +51,6 @@ const Navbar = () => {
               )}
             </button>
             
-            {/* Notification dropdown */}
             {notificationsOpen && (
               <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
                 <div className="px-4 py-2 border-b border-gray-200 font-semibold">
@@ -98,7 +94,6 @@ const Navbar = () => {
             <FaUser />
           </button>
 
-          {/* Mobile menu toggle */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)} 
             className="md:hidden text-gray-700"
@@ -108,7 +103,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
           <Link 

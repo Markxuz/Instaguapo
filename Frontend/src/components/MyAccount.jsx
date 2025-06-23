@@ -8,7 +8,7 @@ const MyAccount = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [showDeleteAccount, setShowDeleteAccount] = useState(false); // New state for delete account modal
+  const [showDeleteAccount, setShowDeleteAccount] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [pushEnabled, setPushEnabled] = useState(true);
@@ -32,9 +32,7 @@ const MyAccount = () => {
   };
 
   const handleDeleteAccount = () => {
-    // Add your account deletion logic here
     console.log('Account deletion requested');
-    // After deletion, you might want to log the user out and redirect
     localStorage.removeItem('token');
     navigate('/login');
   };
@@ -53,19 +51,15 @@ const MyAccount = () => {
       <section>
         <div className="container mx-auto px-6 py-8">
           <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto relative">
-            {/* Settings Icon */}
             <button
               className="absolute top-6 right-6 text-2xl text-gray-700 hover:text-black"
               onClick={() => setShowSettings(true)}
-              aria-label="Settings"
-            >
+              aria-label="Settings">
               <FiSettings />
             </button>
-            {/* Profile Photo */}
+
             <ProfileP />
-            {/* Details Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Left Column */}
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Name:</label>
                 <div className="flex items-center border-b border-gray-300 mb-4">
@@ -93,7 +87,7 @@ const MyAccount = () => {
                   Change Password <FiArrowRight className="ml-2" />
                 </button>
               </div>
-              {/* Right Column */}
+
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Email Address</label>
                 <div className="flex items-center border-b border-gray-300 mb-6">
@@ -111,7 +105,7 @@ const MyAccount = () => {
                 </button>
               </div>
             </div>
-            {/* Delete Account */}
+
             <div className="flex justify-center mt-8">
               <button 
                 className="text-red-600 hover:text-red-800 font-medium text-lg"
@@ -124,7 +118,7 @@ const MyAccount = () => {
         </div>
       </section>
 
-      {/* Delete Account Confirmation Modal */}
+
       {showDeleteAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
           style={{
@@ -165,7 +159,7 @@ const MyAccount = () => {
         </div>
       )}
 
-      {/* Change Password Confirmation Modal */}
+
       {showChangePassword && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
           style={{
@@ -204,7 +198,7 @@ const MyAccount = () => {
         </div>
       )}
 
-      {/* Password Change Form Modal */}
+
       {showPasswordForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
         style={{
@@ -261,7 +255,7 @@ const MyAccount = () => {
         </div>
       )}
 
-      {/* Settings Modal */}
+
       {showSettings && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30"
         style={{
@@ -270,7 +264,6 @@ const MyAccount = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center bottom"}}>
           <div className="bg-white rounded-xl shadow-lg w-[370px] max-w-full">
-            {/* Header */}
             <div className="flex items-center justify-center relative border-b px-4 py-4">
               <button
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl text-gray-700 hover:text-black"
@@ -281,7 +274,7 @@ const MyAccount = () => {
               </button>
               <h2 className="text-xl font-bold text-center flex-1">Settings</h2>
             </div>
-            {/* Push Notifications */}
+
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <div className="flex items-center">
                 <FiBell className="mr-2 text-lg" />
@@ -299,7 +292,6 @@ const MyAccount = () => {
                 )}
               </button>
             </div>
-            {/* Logout */}
             <div className="hover:bg-red-50 transition">
             <button
               className="flex items-center text-red-600 font-semibold px-6 py-4"

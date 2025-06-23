@@ -13,7 +13,7 @@ const VerifyEmail = () => {
         try {
             const response = await axios.post("http://localhost:5000/api/users/verify", { email, code });
             setMessage(response.data.message || "Verification successful!");
-            setTimeout(() => navigate("/login"), 2000); // Redirect to login after success
+            setTimeout(() => navigate("/login"), 2000);
         } catch (error) {
             setMessage(error.response?.data?.message || "Verification failed. Try again.");
         }

@@ -37,7 +37,7 @@ function Collection() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
 
-      {/* Collection Section */}
+
       <div className="container mx-auto px-6 py-12">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Collections</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -63,7 +63,7 @@ function Collection() {
         </div>
       </div>
 
-      {/* Reserve Modal */}
+
       {modalOpen && selectedItem && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-40"
@@ -83,7 +83,7 @@ function Collection() {
               &times;
             </button>
 
-            {/* Modal Content */}
+
             <div className="flex flex-col items-center">
               <div className="border rounded-lg p-2 mb-2 relative w-48 h-48 flex items-center justify-center bg-gray-100">
                 <img

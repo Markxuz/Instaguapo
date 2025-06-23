@@ -18,11 +18,8 @@ function Rprocess() {
     const handleAcceptTerms = () => {
         setAcceptedTerms(true);
         setShowTermsModal(false);
-        // Show success message
         setShowSuccess(true);
-        // Hide success message after 3 seconds
         setTimeout(() => setShowSuccess(false), 3000);
-        // Here you would typically submit to your backend
         console.log('Reservation submitted with:', {
             pickupDate,
             returnDate,
@@ -33,15 +30,10 @@ function Rprocess() {
     return (
         <div className="min-h-screen bg-gray-100">
             <Navbar />
-
-            {/* Main Content */}
             <div className="pt-24 container mx-auto px-6 py-8 max-w-4xl">
-                {/* Page Title */}
                 <h1 className="text-3xl font-bold text-gray-800 mb-8">Make A Reservation</h1>
 
-                {/* Reservation Steps */}
                 <div className="space-y-6">
-                    {/* Step 1 */}
                     <div className="border border-gray-300 p-4 rounded-lg">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">Pick-Up Date</h2>
                         <p className="text-gray-600 mb-4">Select your preferred date and time for the reservation</p>
@@ -63,7 +55,6 @@ function Rprocess() {
                         </div>
                     </div>
 
-                    {/* Step 2 */}
                     <div className="border border-gray-300 p-4 rounded-lg">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">Return Date</h2>
                         <p className="text-gray-600">Choose the exact return date</p>
@@ -85,7 +76,6 @@ function Rprocess() {
                         </div>
                     </div>
 
-                    {/* Step 3 */}
                     <div className="border border-gray-300 p-4 rounded-lg">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">Payment</h2>
                         <p className="text-gray-600">Complete payment through GCash</p>
@@ -98,8 +88,6 @@ function Rprocess() {
                         </div>
                     </div>
 
-
-                    {/* Step 4 with Reference Number Input */}
                     <div className="border border-gray-300 p-4 rounded-lg">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">Enter Reference Number</h2>
                         <p className="text-gray-600 mb-2">Reference number of GCash for your booking confirmation</p>
@@ -113,7 +101,6 @@ function Rprocess() {
                     </div>
                 </div>
 
-                {/* Navigation Buttons */}
                 <div className="flex justify-between mt-8">
                     <button className="px-6 py-2 border border-gray-400 rounded-lg font-medium hover:bg-gray-100">
                         Back
@@ -128,7 +115,6 @@ function Rprocess() {
                 </div>
             </div>
 
-            {/* Terms & Conditions Modal */}
             {showTermsModal && (
                 <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
                     style={{
@@ -181,7 +167,6 @@ function Rprocess() {
                 </div>
             )}
 
-            {/* Success Notification */}
             {showSuccess && (
                 <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center z-50">
                     <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -13,7 +13,7 @@ function Reservation() {
       <Navbar />
 
       <div className="pt-24 container mx-auto px-6 py-6">
-        {/* Title and Button */}
+
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Your Reservation</h1>
           <button 
@@ -24,7 +24,7 @@ function Reservation() {
           </button>
         </div>
 
-        {/* Progress Steps */}
+
         <div className="flex justify-between items-center text-sm text-center text-gray-700 mb-6">
           {[
             "Select Items",
@@ -46,10 +46,9 @@ function Reservation() {
           ))}
         </div>
 
-        {/* Reservation Card */}
+
         <div className="border border-gray-400 rounded-md p-4 bg-white shadow">
           <div className="flex flex-col md:flex-row items-center gap-4">
-            {/* Image */}
             <div className="w-full md:w-1/3 text-center">
               <img
                 src="images/maroont.png"
@@ -60,7 +59,7 @@ function Reservation() {
               <p>₱5000</p>
             </div>
 
-            {/* Details */}
+
             <div className="w-full md:w-2/3">
               <p className="font-bold text-lg mb-2 flex items-center">
                 <span className="mr-2">👤</span> Name

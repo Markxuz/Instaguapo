@@ -1,0 +1,5 @@
+-Can do signup, login, and forgotpass function. can navigate to every page but still don't have admin funtion,
+-it only has a admin dashboard that is not connected to admin login or signup.
+-still have some improvements in the pages, like the logout i tink it should be in front of profile page
+-instead of the delete account function.
+-Having some trouble on the admin side.

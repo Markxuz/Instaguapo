@@ -56,29 +56,25 @@ function AdminSignup() {
               value={fullname}
               onChange={(e) => setFullname(e.target.value)}
               className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required
-            />
+              required/>
             <input
               type="text"
               placeholder="Email"
               value={Email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required
-            />
+              required/>
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required
-            />
+              required/>
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-              disabled={loading}
-            >
+              disabled={loading}>
               {loading ? "Signing up..." : "Sign Up"}
             </button>
           </form>
