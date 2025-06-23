@@ -1,5 +1,6 @@
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Navbar from "./Navbar";
 
 function Favorites() {
@@ -11,13 +12,13 @@ function Favorites() {
       id: 1,
       name: "Two Tone Full Set",
       price: 5000,
-      image: "/images/tone-set.jpg", // Update with actual path
+      image: "/images/maroont.png",
     },
     {
       id: 2,
       name: "Luxury Red Ball Gown",
       price: 5000,
-      image: "/images/red-gown.jpg", // Update with actual path
+      image: "/images/red.png",
     },
   ];
 
@@ -65,9 +66,11 @@ function Favorites() {
               <div>
                 <h2 className="font-semibold">{item.name}</h2>
                 <p className="mb-2">₱ {item.price}</p>
-                <button className="bg-blue-600 text-white px-3 py-1 text-sm rounded">
+                <Link to ={`/collection`}>
+                <button className="bg-blue-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-700">
                   Reserve Now
                 </button>
+                </Link>
               </div>
             </div>
 

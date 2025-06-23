@@ -5,7 +5,7 @@ function Reservation() {
   const navigate = useNavigate();
 
   const handleNewReservation = () => {
-    navigate('/collection'); // Navigate to collection page
+    navigate('/collection');
   };
 
   return (
@@ -52,9 +52,9 @@ function Reservation() {
             {/* Image */}
             <div className="w-full md:w-1/3 text-center">
               <img
-                src="/path/to/formalwear.jpg" // update this path
+                src="images/maroont.png"
                 alt="Formal Wear"
-                className="w-40 h-auto mx-auto border"
+                className="w-40 h-auto mx-auto border rounded-lg"
               />
               <p className="font-semibold mt-2">Two Tone Full Set</p>
               <p>₱5000</p>

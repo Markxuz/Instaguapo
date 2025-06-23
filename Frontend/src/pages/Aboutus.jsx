@@ -7,20 +7,21 @@ function Aboutus() {
             <Navbar />
 
             <div className="pt-24 container mx-auto px-6 py-8">
-                {/* About Us Section with Image */}
+                {/* About Us Section */}
                 <div className="flex flex-col lg:flex-row items-start gap-8 mb-12">
                     <img 
-                        src="/path/to/your/image.jpg" 
+                        src="images/aboutus.jpg" 
                         alt="Storefront" 
                         className="w-full lg:w-1/2 rounded-lg shadow-md"
                     />
                     <div className="lg:w-1/2">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">About Us</h2>
-                        <p className="text-gray-700 mb-4">
-                            At InstaGuapo, we are dedicated to providing a smooth and hassle-free reservation experience. 
-                            With years of industry expertise, we take pride in delivering reliable service and quality 
-                            formal wear for every special occasion. Please note that all reservations are strictly 
-                            non-refundable. We encourage careful selection before finalizing bookings. Your satisfaction 
+                        <h2 className="text-2xl font-bold text-black mb-4">About Us</h2>
+                        <p className="text-xl text-black mb-4 text-justify">
+                            At InstaGuapo, we are dedicated to providing a smooth and hassle-free
+                            reservation experience. With years of industry expertise, we take pride
+                            in delivering reliable service and quality formal wear for every special
+                            occasion. Please note that all reservations are strictly non-refundable.
+                            We encourage careful selection before finalizing bookings. Your satisfaction
                             is our priority, and we look forward to being part of your memorable moments.
                         </p>
                     </div>
@@ -30,8 +31,8 @@ function Aboutus() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Contact Us */}
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Us</h2>
-                        <div className="space-y-3 text-gray-700">
+                        <h2 className="text-2xl font-bold text-black mb-4">Contact Us</h2>
+                        <div className="text-lg space-y-3 text-black">
                             <p>📞 0926-820-8475 / 09153868022</p>
                             <p>📧 Instaguapo@gmail.com</p>
                             <p>📍 560 jm loyola street, Carmona, Philippines, 4116</p>
@@ -41,7 +42,7 @@ function Aboutus() {
 
                     {/* Message Us */}
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Message Us</h2>
+                        <h2 className="text-2xl font-bold text-black mb-4">Message Us</h2>
                         <form className="space-y-4">
                             <div>
                                 <div className="mb-1">Name:</div>

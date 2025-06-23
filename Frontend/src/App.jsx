@@ -14,8 +14,8 @@ import Favorites from "./components/Favorites";
 import Rprocess from "./components/Rprocess";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import AdminLogin from "./pages/AdminLogin";
 import AdminSignup from "./pages/AdminSignup";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
     return (
@@ -29,9 +29,8 @@ function App() {
                 <Route path="/reset-password" element={<ResetPassword />} />
 
 
-                <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/admin-signup" element={<AdminSignup />} />
-
+                <Route path="/admin-login" element={<AdminLogin />} />
 
                 <Route path="/mainpage" element={<Mainpage />} />
                 <Route path="/collection" element={<Collection />} />

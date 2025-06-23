@@ -89,14 +89,15 @@ function Rprocess() {
                     <div className="border border-gray-300 p-4 rounded-lg">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">Payment</h2>
                         <p className="text-gray-600">Complete payment through GCash</p>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center w-full">
                             <img 
-                                src="/images/gcash-qr.png"
-                                alt="GCash QR Code" 
-                                className="w-48 h-48 object-contain border rounded-lg shadow"
+                            src="/images/qr1.png"
+                            alt="GCash QR Code" 
+                            className="w-48 h-48 object-contain border rounded-lg shadow transition-transform duration-300 hover:scale-110"
                             />
                         </div>
                     </div>
+
 
                     {/* Step 4 with Reference Number Input */}
                     <div className="border border-gray-300 p-4 rounded-lg">
@@ -139,13 +140,13 @@ function Rprocess() {
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">InstaGuapo Terms & Conditions</h2>
                         
                         <div className="text-gray-700 space-y-4 mb-6">
-                            <p>After making a reservation, you must arrive at InstaGuapo two days. I work with your new Philippines, club, within a Monet. If you do not arrive until three specified time, your reservation will not be proceeded.</p>
+                            <p>After making a reservation, you must arrive at InstaGuapo, 560 JM Loyola Street, Carmona, Philippines, 4116, within 24 hours. If you do not arrive within the specified time, your reservation will not be processed.</p>
                             
-                            <p>Balance should be paid on the paid date and must assume that all of them prior to instaGuapo will not release the formal user without child.</p>
+                            <p>Balance should be paid on the pick up date and must surrender valid id upon pickup. InstaGuapo will not release the formal wear without valid id.</p>
                             
-                            <p>Find up time will be at 8 pm amounts on the paid up date.</p>
+                            <p>Pick up time will be at 6 pm onwards on the pick up date.</p>
                             
-                            <p>Formal Note has to be returned on the declared date. Forward in terms of any call input from each of the said date there would be penalty if 300 person per day.</p>
+                            <p>Formal Wear has to be returned on the declared date. If the item formal wear will not be returned on the said date there would be penalty of 300 pesos per day.</p>
                         </div>
                         
                         <div className="flex items-center mb-6">

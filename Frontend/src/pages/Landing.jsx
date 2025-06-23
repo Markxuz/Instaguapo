@@ -39,7 +39,7 @@ function LandingPage() {
                 id: 1,
                 name: "Luxury Blue Ball Gown",
                 price: "₱5000",
-                image: "images/blue.png" 
+                image: "images/blue.png"
               },
               {
                 id: 2,
@@ -50,7 +50,7 @@ function LandingPage() {
               {
                 id: 3,
                 name: "Black White Silver Coat",
-                price: "₱2500/",
+                price: "₱2500",
                 image: "images/black.png"
               },
               {
@@ -61,13 +61,13 @@ function LandingPage() {
               }
             ].map((item) => (
               <div key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="h-48 overflow-hidden">
-                  <img 
-                    src={item.image} 
+                <div className="h-48 bg-white flex items-center justify-center">
+                  <img
+                    src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover"
+                    className="max-h-full object-contain"
                     onError={(e) => {
-                      e.target.onerror = null; 
+                      e.target.onerror = null;
                       e.target.src = "images/placeholder.jpg";
                     }}
                   />
@@ -75,8 +75,8 @@ function LandingPage() {
                 <div className="p-4">
                   <h3 className="text-lg font-bold text-gray-800">{item.name}</h3>
                   <p className="text-gray-600 my-2">{item.price}</p>
-                  <button 
-                    onClick={openModal} 
+                  <button
+                    onClick={openModal}
                     className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
                     Reserve Now
@@ -105,13 +105,13 @@ function LandingPage() {
       )}
 
       {/* How It Works */}
-      <section className="bg-gray-50 py-12">
+      <section className="bg-white py-12">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">How It Works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {["Browse & Select", "Book Online", "Try It On", "Return"].map((step, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold">
+                <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center text-xl font-bold">
                   {index + 1}
                 </div>
                 <p className="mt-4 text-gray-600">{step}</p>

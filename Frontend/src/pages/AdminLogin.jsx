@@ -1,143 +1,63 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoEye, IoEyeOff } from "react-icons/io5";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import AdNav from "../components/AdNav";
+import axios from "axios";
 
-function AdLogin() {
-  const [email, setEmail] = useState("");
+function AdminLogin() {
   const [password, setPassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState(""); // State for email in the modal
-  const [forgotError, setForgotError] = useState(""); // State for error in the modal
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [Email, setEmail] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [forgotLoading, setForgotLoading] = useState(false);
-  const [forgotSuccess, setForgotSuccess] = useState(false);
-
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
+    setError(null);
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/admin/login", { email, password });
-      const user = response.data.user;
-
-      if (!user) {
-        setErrorMessage("Invalid login response. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      if (!user.IsVerified) {
-        setErrorMessage("Please verify your email before logging in.");
-        setLoading(false);
-        return;
-      }
-
-      // Store token & redirect
-      localStorage.setItem("token", response.data.token);
-      navigate("/Mainpage");
-    } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Login failed. Please try again.");
+      const res = await axios.post("http://localhost:5000/api/admin/login", {
+        Email,
+        password,
+      });
+      localStorage.setItem("adminToken", res.data.token);
+      navigate("/admin-dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = async () => {
-    if (!forgotEmail) {
-      setForgotError("Email is required.");
-      return;
-    }
-    if (!/^\S+@\S+\.\S+$/.test(forgotEmail)) {
-      setForgotError("Please enter a valid email address");
-      return;
-    }
-  
-    try {
-      setForgotLoading(true);
-      setForgotError("");
-      const response = await axios.post("http://localhost:5000/api/users/forgot-password", {
-        email: forgotEmail
-      });
-      
-      setForgotSuccess(true);
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setForgotSuccess(false);
-      }, 2000);
-    } catch (error) {
-      setForgotError(error.response?.data?.message || "Error sending reset link");
-    } finally {
-      setForgotLoading(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col"
-      style={{
-        backgroundImage: "url('images/background_resized.jpg')",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center bottom"
-      }}>
+    <div>
       <AdNav />
-      
-      {/* Login Form */}
-      <div className="flex-grow flex items-center justify-center">
-        <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
-          <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md w-96">
+          <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+
+          {error && <p className="text-red-500 mb-2 text-center">{error}</p>}
+
           <form onSubmit={handleLogin}>
-            <div className="mb-4">
-              <label htmlFor="Email" className="block text-gray-700">Email</label>
-              <input
-                type="text"
-                id="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-                >
-                  {showPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
-                </button>
-              </div>
-            </div>
-
-            {errorMessage && <p className="text-red-500 text-sm mb-4">{errorMessage}</p>}
-
-            <div className="text-right mb-4">
-              <button type="button" onClick={() => setIsModalOpen(true)} className="text-sm text-blue-600 hover:underline">
-                Forgot password?
-              </button>
-            </div>
-
+            <input
+              type="text"
+              placeholder="Email"
+              value={Email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
+              required
+            />
             <button
               type="submit"
-              className={`w-full py-2 rounded-lg text-white transition-all ${
-                loading ? "bg-gray-500 cursor-not-allowed" : "bg-black hover:bg-gray-800"
-              }`}
+              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
@@ -145,65 +65,8 @@ function AdLogin() {
           </form>
         </div>
       </div>
-
-     {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-              <h3 className="text-xl font-bold mb-4">Forgot Password</h3>
-
-              {forgotSuccess ? (
-                <div className="text-center">
-                  <p className="text-green-500 mb-4">Code sent! Check your email.</p>
-                  <Link
-                    to="/reset-password"
-                    onClick={() => setIsModalOpen(false)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Go to Reset Password →
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <p className="text-gray-600 mb-4">Enter your email to receive a reset code.</p>
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={forgotEmail}
-                    onChange={(e) => {
-                      setForgotEmail(e.target.value);
-                      setForgotError("");
-                    }}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                  {forgotError && <p className="text-red-500 text-sm mb-4">{forgotError}</p>}
-
-                  <div className="flex justify-end space-x-4">
-                    <button 
-                      onClick={() => setIsModalOpen(false)} 
-                      className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
-                      disabled={forgotLoading}
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={handleForgotPassword} 
-                      className={`px-4 py-2 text-white rounded-lg ${
-                        forgotLoading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-                      }`}
-                      disabled={forgotLoading}
-                    >
-                      {forgotLoading ? "Sending..." : "Send Code"}
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
     </div>
   );
 }
 
-export default AdLogin;
+export default AdminLogin;

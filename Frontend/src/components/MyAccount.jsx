@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import ProfileP from './user/profileP';
 import { FiSettings, FiUser, FiEdit2, FiMail, FiPhone, FiArrowRight, FiBell, FiLogOut, FiChevronLeft, FiX } from 'react-icons/fi';
 
 const MyAccount = () => {
@@ -24,7 +25,6 @@ const MyAccount = () => {
   };
 
   const handlePasswordChange = () => {
-    // Add your password change logic here
     console.log('New Password:', newPassword);
     setShowPasswordForm(false);
     setNewPassword('');
@@ -62,17 +62,7 @@ const MyAccount = () => {
               <FiSettings />
             </button>
             {/* Profile Photo */}
-            <div className="flex flex-col items-center mb-8">
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center bg-gray-100">
-                  <FiUser className="text-6xl text-gray-400" />
-                </div>
-                <button className="absolute bottom-2 right-2 bg-white border border-gray-300 rounded-full p-1 hover:bg-gray-100">
-                  <FiEdit2 className="text-gray-600 text-lg" />
-                </button>
-              </div>
-              <span className="mt-2 text-sm text-gray-700">Profile Photo</span>
-            </div>
+            <ProfileP />
             {/* Details Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left Column */}
@@ -310,13 +300,15 @@ const MyAccount = () => {
               </button>
             </div>
             {/* Logout */}
+            <div className="hover:bg-red-50 transition">
             <button
-              className="flex items-center text-red-600 font-semibold px-6 py-4 w-full hover:bg-red-50 transition"
+              className="flex items-center text-red-600 font-semibold px-6 py-4"
               onClick={handleLogout}
             >
               <FiLogOut className="mr-2 text-lg" />
               Logout
             </button>
+            </div>
           </div>
         </div>
       )}
