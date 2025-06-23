@@ -10,13 +10,13 @@ const signup = async (req, res) => {
   const VerificationCode = crypto.randomInt(100000, 1000000).toString(); // generate 6-digit code
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     User.createUser(
       {
         fullname,
         email,
-        password: hashedPassword, // store the hashed password
+        password: hashedPassword,
         phonenumber,
         VerificationCode,
       },
@@ -97,13 +97,13 @@ const forgotPassword = async (req, res) => {
     }
 
     const resetCode = crypto.randomInt(100000, 1000000).toString();
-    const resetCodeExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    const resetCodeExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
     User.saveResetCode(email, resetCode, resetCodeExpiry, (err) => {
       if (err) return res.status(500).json({ message: "Database error" });
 
       try {
-        sendPasswordResetEmail(email, resetCode); // sends the code
+        sendPasswordResetEmail(email, resetCode);
         res.status(200).json({ message: "Password reset code sent to email" });
       } catch (emailErr) {
         return res.status(500).json({ message: "Failed to send email", emailErr });
