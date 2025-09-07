@@ -1,33 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AdNav from "../../components/admin/AdNav";
 import axios from "axios";
-import AdNav from "../components/AdNav";
 
-function AdminSignup() {
-  const [Email, setEmail] = useState("");
+function AdminLogin() {
   const [password, setPassword] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [Email, setEmail] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+    setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/signup", {
+      const res = await axios.post("http://localhost:5000/api/admin/login", {
         Email,
         password,
       });
-      setSuccess(res.data.message);
-      setTimeout(() => navigate("/admin-login"), 2000);
+      localStorage.setItem("adminToken", res.data.token);
+      navigate("/admin-dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -39,43 +35,39 @@ function AdminSignup() {
         backgroundImage: "url('images/background_resized.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: "center bottom"
+        backgroundPosition: "center bottom",
       }}>
+
       <AdNav />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 rounded-lg shadow-md w-96">
-          <h2 className="text-2xl font-bold mb-4 text-center">Admin Sign Up</h2>
+      <div className="flex-grow flex items-center justify-center">
+        <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
+          <h2 className="text-2xl font-bold text-center mb-6">Admin Login</h2>
 
           {error && <p className="text-red-500 mb-2 text-center">{error}</p>}
-          {success && <p className="text-green-500 mb-2 text-center">{success}</p>}
 
-          <form onSubmit={handleSignup}>
-            <input
-              type="text"
-              placeholder="Full name"
-              value={fullname}
-              onChange={(e) => setFullname(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required/>
+          <form onSubmit={handleLogin}>
             <input
               type="text"
               placeholder="Email"
               value={Email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required/>
+              required
+            />
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mb-4 px-4 py-2 border border-gray-300 rounded"
-              required/>
+              required
+            />
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-              disabled={loading}>
-              {loading ? "Signing up..." : "Sign Up"}
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
         </div>
@@ -84,6 +76,4 @@ function AdminSignup() {
   );
 }
 
-export default AdminSignup;
-
-
+export default AdminLogin;

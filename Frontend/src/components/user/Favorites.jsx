@@ -1,7 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 
 function Favorites() {
   const navigate = useNavigate();

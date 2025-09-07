@@ -6,7 +6,6 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-// User Routes
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 

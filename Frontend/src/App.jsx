@@ -10,12 +10,11 @@ import Forgotpass from "./components/Passcode";
 import VerifyEmail from "./components/VerifyEmail";
 import ResetPassword from "./components/Resetpassword";
 import MyAccount from "./components/MyAccount";
-import Favorites from "./components/Favorites";
+import Favorites from "./components/user/Favorites";
 import Rprocess from "./components/Rprocess";
-import ProtectedRoute from "./components/ProtectedRoute";
 
-import AdminSignup from "./pages/AdminSignup";
-import AdminLogin from "./pages/AdminLogin";
+import AdminSignup from "./pages/adminblock/AdminSignup";
+import AdminLogin from "./pages/adminblock/AdminLogin";
 
 function App() {
     return (
@@ -39,14 +38,7 @@ function App() {
                 <Route path="/rprocess" element={<Rprocess />} />
                 <Route path="/favorites" element={<Favorites />} />
 
-                <Route
-                    path="/myaccount"
-                    element={
-                        <ProtectedRoute>
-                            <MyAccount />
-                        </ProtectedRoute>
-                    }
-                />
+                <Route path="/myaccount" element={<MyAccount />} />
             </Routes>
         </Router>
     );

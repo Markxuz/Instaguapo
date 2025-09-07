@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoEye, IoEyeOff } from "react-icons/io5";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import LandingNav from "../components/LandingNav";
+import LoginForm from "../components/Loginform";
+import ForgotPasswordModal from "../components/Forgotpassmodal";
+import { loginUser, forgotPassword } from "../api/UserApi";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState(""); 
-  const [forgotError, setForgotError] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+ 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotError, setForgotError] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
   const [forgotSuccess, setForgotSuccess] = useState(false);
 
@@ -24,26 +27,17 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", { email, password });
-      const user = response.data.user;
+      const response = await loginUser({ email, password });
+      const user = response.user;
 
-      if (!user) {
-        setErrorMessage("Invalid login response. Please try again.");
-        setLoading(false);
-        return;
-      }
+      if (!user) throw new Error("Invalid login response. Please try again.");
+      if (!user.IsVerified) throw new Error("Please verify your email before logging in.");
 
-      if (!user.IsVerified) {
-        setErrorMessage("Please verify your email before logging in.");
-        setLoading(false);
-        return;
-      }
-
-
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.token);
       navigate("/Mainpage");
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Login failed. Please try again.");
+      setErrorMessage(error.message || "Login failed. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -57,156 +51,60 @@ function Login() {
       setForgotError("Please enter a valid email address");
       return;
     }
-  
+
     try {
       setForgotLoading(true);
       setForgotError("");
-      const response = await axios.post("http://localhost:5000/api/users/forgot-password", {
-        email: forgotEmail
-      });
-      
+      await forgotPassword(forgotEmail);
+
       setForgotSuccess(true);
       setTimeout(() => {
         setIsModalOpen(false);
         setForgotSuccess(false);
       }, 2000);
     } catch (error) {
-      setForgotError(error.response?.data?.message || "Error sending reset link");
+      setForgotError(error.message || "Error sending reset link");
     } finally {
       setForgotLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col"
+    <div
+      className="min-h-screen bg-gray-100 flex flex-col"
       style={{
         backgroundImage: "url('images/background_resized.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center bottom"
-      }}>
+      }}
+    >
       <LandingNav />
-      
- 
       <div className="flex-grow flex items-center justify-center">
         <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-          <form onSubmit={handleLogin}>
-            <div className="mb-4">
-              <label htmlFor="Email" className="block text-gray-700">Email</label>
-              <input
-                type="text"
-                id="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-                >
-                  {showPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
-                </button>
-              </div>
-            </div>
-
-            {errorMessage && <p className="text-red-500 text-sm mb-4">{errorMessage}</p>}
-
-            <div className="text-right mb-4">
-              <button type="button" onClick={() => setIsModalOpen(true)} className="text-sm text-blue-600 hover:underline">
-                Forgot password?
-              </button>
-            </div>
-
-            <button
-              type="submit"
-              className={`w-full py-2 rounded-lg text-white transition-all ${
-                loading ? "bg-gray-500 cursor-not-allowed" : "bg-black hover:bg-gray-800"
-              }`}
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
-          </form>
+          <LoginForm
+            email={email} setEmail={setEmail}
+            password={password} setPassword={setPassword}
+            showPassword={showPassword} setShowPassword={setShowPassword}
+            handleLogin={handleLogin}
+            loading={loading}
+            errorMessage={errorMessage}
+            openForgotModal={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
 
-     {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center"
-            style={{
-                backgroundImage: "url('images/background_resized.jpg')",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center bottom"}}>
-            <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-              <h3 className="text-xl font-bold mb-4">Forgot Password</h3>
-
-              {forgotSuccess ? (
-                <div className="text-center">
-                  <p className="text-green-500 mb-4">Code sent! Check your email.</p>
-                  <Link
-                    to="/reset-password"
-                    onClick={() => setIsModalOpen(false)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Go to Reset Password →
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <p className="text-gray-600 mb-4">Enter your email to receive a reset code.</p>
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={forgotEmail}
-                    onChange={(e) => {
-                      setForgotEmail(e.target.value);
-                      setForgotError("");
-                    }}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                  {forgotError && <p className="text-red-500 text-sm mb-4">{forgotError}</p>}
-
-                  <div className="flex justify-end space-x-4">
-                    <button 
-                      onClick={() => setIsModalOpen(false)} 
-                      className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
-                      disabled={forgotLoading}
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={handleForgotPassword} 
-                      className={`px-4 py-2 text-white rounded-lg ${
-                        forgotLoading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-                      }`}
-                      disabled={forgotLoading}
-                    >
-                      {forgotLoading ? "Sending..." : "Send Code"}
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
+      <ForgotPasswordModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        forgotEmail={forgotEmail}
+        setForgotEmail={setForgotEmail}
+        forgotError={forgotError}
+        forgotLoading={forgotLoading}
+        forgotSuccess={forgotSuccess}
+        handleForgotPassword={handleForgotPassword}
+      />
     </div>
   );
 }

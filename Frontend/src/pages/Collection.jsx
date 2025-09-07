@@ -53,7 +53,7 @@ function Collection() {
               <h3 className="mt-4 text-lg font-bold text-gray-800">{item.name}</h3>
               <p className="text-gray-600">{item.price}</p>
               <button
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700"
                 onClick={() => handleReserveClick(item)}
               >
                 Reserve Now
@@ -105,7 +105,7 @@ function Collection() {
                 <FiHeart className="text-blue-600 text-xl cursor-pointer" />
               </div>
               <Link to="/Rprocess">
-                <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
+                <button className="mt-4 px-4 py-2 bg-black text-white rounded-lg font-semibold hover:bg-gray-700">
                   RESERVE NOW
                 </button>
               </Link>

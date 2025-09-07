@@ -7,7 +7,7 @@ const jwt= require("jsonwebtoken");
 
 const signup = async (req, res) => {
   const { fullname, email, password, phonenumber } = req.body;
-  const VerificationCode = crypto.randomInt(100000, 1000000).toString(); // generate 6-digit code
+  const VerificationCode = crypto.randomInt(100000, 1000000).toString();
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
