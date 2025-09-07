@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LandingNav from "../components/LandingNav";
-import LoginForm from "../components/Loginform";
-import ForgotPasswordModal from "../components/Forgotpassmodal";
+import LoginForm from "../components/forms/Loginform";
+import ForgotPasswordModal from "../components/modal/Forgotpassmodal";
 import { loginUser, forgotPassword } from "../api/UserApi";
 
 function Login() {

@@ -18,7 +18,7 @@ function SignupForm({
       {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
 
-      {/* Full Name */}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">Full Name</label>
         <input
@@ -30,7 +30,7 @@ function SignupForm({
         />
       </div>
 
-      {/* Email */}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">Email</label>
         <input
@@ -42,7 +42,7 @@ function SignupForm({
         />
       </div>
 
-      {/* Phone Number */}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
         <input
@@ -54,7 +54,7 @@ function SignupForm({
         />
       </div>
 
-      {/* Password */}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">Password</label>
         <div className="relative">
@@ -75,7 +75,7 @@ function SignupForm({
         </div>
       </div>
 
-      {/* Confirm Password */}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
         <div className="relative">
@@ -96,7 +96,7 @@ function SignupForm({
         </div>
       </div>
 
-      {/* Submit */}
+
       <button
         type="submit"
         className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800"

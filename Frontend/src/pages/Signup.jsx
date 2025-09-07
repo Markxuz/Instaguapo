@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import LandingNav from "../components/LandingNav";
-import SignupForm from "../components/Signupform";
+import SignupForm from "../components/forms/Signupform";
 import { signupUser } from "../api/UserApi";
 
 function Signup() {
@@ -21,7 +21,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // validation
+
     if (!fullname || !email || !password || !confirmPassword || !phonenumber) {
       setError("All fields are required.");
       return;

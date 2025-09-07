@@ -11,7 +11,6 @@ function LoginForm({
 }) {
   return (
     <form onSubmit={handleLogin}>
-      {/* Email */}
       <div className="mb-4">
         <label htmlFor="Email" className="block text-gray-700">Email</label>
         <input
@@ -24,7 +23,6 @@ function LoginForm({
         />
       </div>
 
-      {/* Password */}
       <div className="mb-4">
         <label htmlFor="password" className="block text-gray-700">Password</label>
         <div className="relative">
@@ -46,10 +44,8 @@ function LoginForm({
         </div>
       </div>
 
-      {/* Error */}
       {errorMessage && <p className="text-red-500 text-sm mb-4">{errorMessage}</p>}
 
-      {/* Forgot Password */}
       <div className="text-right mb-4">
         <button
           type="button"
@@ -60,7 +56,6 @@ function LoginForm({
         </button>
       </div>
 
-      {/* Submit */}
       <button
         type="submit"
         className={`w-full py-2 rounded-lg text-white transition-all ${
