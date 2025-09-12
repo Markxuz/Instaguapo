@@ -1,5 +1,5 @@
--Can do signup, login, and forgotpass function. can navigate to every page but still don't have admin funtion,
--it only has a admin dashboard that is not connected to admin login or signup.
--still have some improvements in the pages, like the logout i tink it should be in front of profile page
--instead of the delete account function.
--Having some trouble on the admin side.
+-New Update
+-Signup, verification, and login are working on admin and users side,
+-the reservation functions are on progress
+-some parts need changes including the buttons and other functions,
+-that may affect our system and mostly our documentation.
