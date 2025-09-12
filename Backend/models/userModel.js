@@ -54,6 +54,11 @@ const saveResetCode = (email, code, expiry, callback) => {
   db.query(sql, [code, expiry, email], callback);
 };
 
+const deleteUserById = (userId, callback) => {
+  const sql = 'DELETE FROM User WHERE UserID = ?';
+  db.query(sql, [userId], callback);
+};
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -61,5 +66,6 @@ module.exports = {
     updateResetToken,
     findByResetToken,
     updatePassword,
-    saveResetCode
+    saveResetCode,
+    deleteUserById
   };

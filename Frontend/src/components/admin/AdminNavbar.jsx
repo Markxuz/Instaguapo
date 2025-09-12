@@ -25,10 +25,10 @@ const AdminNavbar = () => {
 
         <div className="hidden md:flex flex-1 justify-center">
           <ul className="flex space-x-6">
-            <li><Link to="/mainpage" className="text-gray-600 hover:text-blue-600 px-3 py-2">Home</Link></li>
-            <li><Link to="/collection" className="text-gray-600 hover:text-blue-600 px-3 py-2">Collection</Link></li>
-            <li><Link to="/reservation" className="text-gray-600 hover:text-blue-600 px-3 py-2">Reservation</Link></li>
-            <li><Link to="/calendar" className="text-gray-600 hover:text-blue-600 px-3 py-2">Calendar</Link></li>
+            <li><Link to="/admin-dashboard" className="text-gray-600 hover:text-blue-600 px-3 py-2">Home</Link></li>
+            <li><Link to="/AdminCollection" className="text-gray-600 hover:text-blue-600 px-3 py-2">Collection</Link></li>
+            <li><Link to="/AdminReservation" className="text-gray-600 hover:text-blue-600 px-3 py-2">Reservation</Link></li>
+            <li><Link to="/AdminCalendar" className="text-gray-600 hover:text-blue-600 px-3 py-2">Calendar</Link></li>
           </ul>
         </div>
 
@@ -105,42 +105,35 @@ const AdminNavbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
           <Link 
-            to="/mainpage" 
+            to="/AdDash" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-blue-600"
           >
             Home
           </Link>
           <Link 
-            to="/collection" 
+            to="/AdminCollection" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-blue-600"
           >
             Collection
           </Link>
           <Link 
-            to="/reservation" 
+            to="/AdminReservation" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-blue-600"
           >
             Reservation
           </Link>
           <Link 
-            to="/calendar" 
+            to="/AdminCalendar" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-blue-600"
           >
             Calendar
           </Link>
           <Link 
-            to="/favorites" 
-            onClick={() => setMenuOpen(false)} 
-            className="block text-gray-600 hover:text-red-500"
-          >
-            Favorites
-          </Link>
-          <Link 
-            to="/notifications" 
+            to="/AdminNotifications" 
             onClick={() => setMenuOpen(false)} 
             className=" text-gray-600 hover:text-yellow-500 flex items-center"
           >
@@ -152,7 +145,7 @@ const AdminNavbar = () => {
             )}
           </Link>
           <Link 
-            to="/profile" 
+            to="/AdminProfile" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-purple-600"
           >

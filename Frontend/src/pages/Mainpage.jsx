@@ -23,7 +23,7 @@ function Mainpage() {
             We Offer 50% Down Payment for Reservations!
           </h1>
           <Link to="/Collection">
-            <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-700">
               Browse Collection
             </button>
           </Link>
@@ -78,7 +78,7 @@ function Mainpage() {
                   <p className="text-gray-600 my-2">{item.price}</p>
                   <Link to="/Collection">
                   <button
-                    className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="w-full mt-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700 transition"
                   >
                     Reserve Now
                   </button>

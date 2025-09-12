@@ -49,7 +49,7 @@ export async function forgotPassword(email) {
   return data;
 }
 
-export async function verifyEmail(email, code) {
+export async function verifyEmail({ email, code }) {
   const response = await fetch("http://localhost:5000/api/users/verify", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -61,6 +61,25 @@ export async function verifyEmail(email, code) {
   if (!response.ok) {
     throw new Error(data.message || "Verification failed. Try again.");
   }
-  
+
+  return data;
+}
+export async function deleteAccount() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("http://localhost:5000/api/users/delete", {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete account");
+  }
+
   return data;
 }

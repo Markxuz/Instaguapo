@@ -15,6 +15,9 @@ import Rprocess from "./components/Rprocess";
 
 import AdminSignup from "./pages/adminblock/AdminSignup";
 import AdminLogin from "./pages/adminblock/AdminLogin";
+import AdVerificationForm from "./components/admin/Adverificationform";
+import AdDash from "./pages/adminblock/AdDash";
+
 
 function App() {
     return (
@@ -30,6 +33,9 @@ function App() {
 
                 <Route path="/admin-signup" element={<AdminSignup />} />
                 <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin-verification" element={<AdVerificationForm />} />
+                <Route path="/admin-dashboard" element={<AdDash />} />
+
 
                 <Route path="/mainpage" element={<Mainpage />} />
                 <Route path="/collection" element={<Collection />} />

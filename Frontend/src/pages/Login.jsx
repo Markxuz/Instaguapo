@@ -12,7 +12,6 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
- 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotError, setForgotError] = useState("");
@@ -34,6 +33,8 @@ function Login() {
       if (!user.IsVerified) throw new Error("Please verify your email before logging in.");
 
       localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(user));
+
       navigate("/Mainpage");
     } catch (error) {
       setErrorMessage(error.message || "Login failed. Please try again.");

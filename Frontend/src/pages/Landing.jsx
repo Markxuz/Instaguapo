@@ -24,7 +24,7 @@ function LandingPage() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
           <h1 className="text-3xl sm:text-4xl font-bold">Rent Perfect Formal Wear for Your Special Occasions</h1>
           <Link to="/Signup">
-            <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign Up Now</button>
+            <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-700 transition">Sign Up Now</button>
           </Link>
         </div>
       </section>
@@ -77,7 +77,7 @@ function LandingPage() {
                   <p className="text-gray-600 my-2">{item.price}</p>
                   <button
                     onClick={openModal}
-                    className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="w-full mt-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700 transition"
                   >
                     Reserve Now
                   </button>

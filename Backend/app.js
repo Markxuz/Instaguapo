@@ -6,8 +6,12 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
+
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
+
+const adminRoutes = require("./routes/adminRoutes");
+app.use("/api/admins", adminRoutes);
 
 module.exports = app;
