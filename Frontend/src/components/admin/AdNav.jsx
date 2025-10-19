@@ -8,8 +8,8 @@ const AdNav = () => {
           <Link to= "/" className="hover:text-blue-500">Instaguapo.</Link>
         </h1>
         <div className="space-x-6">
-          <Link to="/admin-signup" className="text-gray-600 hover:text-gray-800">Admin Signup</Link>
-          <Link to="/admin-login" className="text-gray-600 hover:text-gray-800">Admin Login</Link>
+          <Link to="/admin-signup" className="text-gray-600 hover:text-gray-800">Signup</Link>
+          <Link to="/admin-login" className="text-gray-600 hover:text-gray-800">Login</Link>
         </div>
       </div>
     </nav>

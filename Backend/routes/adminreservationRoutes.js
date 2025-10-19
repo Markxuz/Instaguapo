@@ -1,16 +1,10 @@
-import express from "express";
-import {
-  getReservations,
-  addReservation,
-  changeReservationStatus,
-  removeReservation,
-} from "../controllers/adminreservationController.js";
-
+const express = require("express");
 const router = express.Router();
+const adminReservationController = require("../controllers/adminreservationController");
 
-router.get("/", getReservations);
-router.post("/", addReservation);
-router.put("/:id/status", changeReservationStatus);
-router.delete("/:id", removeReservation);
+router.get("/", adminReservationController.getReservations);
+router.post("/", adminReservationController.addReservation);
+router.put("/:id/status", adminReservationController.updateReservationStatus);
+router.delete("/:id", adminReservationController.deleteReservation);
 
-export default router;
+module.exports = router;

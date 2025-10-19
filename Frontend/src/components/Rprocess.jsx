@@ -1,182 +1,180 @@
-import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { createReservation } from "../api/ReservationApi";
 
 function Rprocess() {
-    const [pickupDate, setPickupDate] = useState(null);
-    const [returnDate, setReturnDate] = useState(null);
-    const [referenceNumber, setReferenceNumber] = useState('');
-    const [showTermsModal, setShowTermsModal] = useState(false);
-    const [acceptedTerms, setAcceptedTerms] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const selectedWear = location.state?.item; // data passed from Collection
 
-    const handleContinueClick = () => {
-        setShowTermsModal(true);
-    };
+  const [formData, setFormData] = useState({
+    ReturnDate: "",
+    Notes: "", // GCash Reference number
+  });
 
-    const handleAcceptTerms = () => {
-        setAcceptedTerms(true);
-        setShowTermsModal(false);
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 3000);
-        console.log('Reservation submitted with:', {
-            pickupDate,
-            returnDate,
-            referenceNumber
-        });
-    };
+  const [loading, setLoading] = useState(false);
+  const [showTerms, setShowTerms] = useState(false); // Modal toggle
 
-    return (
-        <div className="min-h-screen bg-gray-100">
-            <Navbar />
-            <div className="pt-24 container mx-auto px-6 py-8 max-w-4xl">
-                <h1 className="text-3xl font-bold text-gray-800 mb-8">Make A Reservation</h1>
+  // Get logged-in user ID from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userID = user ? user.UserID : null;
 
-                <div className="space-y-6">
-                    <div className="border border-gray-300 p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Pick-Up Date</h2>
-                        <p className="text-gray-600 mb-4">Select your preferred date and time for the reservation</p>
-                        <div className="flex items-center space-x-4">
-                            <div className="w-full max-w-xs">
-                                <DatePicker
-                                    selected={pickupDate}
-                                    onChange={(date) => setPickupDate(date)}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    dateFormat="MMMM d, yyyy"
-                                    minDate={new Date()}
-                                    placeholderText="Select date"
-                                    showPopperArrow={false}
-                                    calendarClassName="border border-gray-300 shadow-lg rounded-md"
-                                    dayClassName={() => "hover:bg-blue-100"}
-                                    wrapperClassName="w-full"
-                                />
-                            </div>
-                        </div>
-                    </div>
+  // Submit handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!userID) {
+      alert("Please log in first before reserving.");
+      return;
+    }
 
-                    <div className="border border-gray-300 p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Return Date</h2>
-                        <p className="text-gray-600">Choose the exact return date</p>
-                        <div className="flex items-center space-x-4">
-                            <div className="w-full max-w-xs">
-                                <DatePicker
-                                    selected={returnDate}
-                                    onChange={(date) => setReturnDate(date)}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    dateFormat="MMMM d, yyyy"
-                                    minDate={pickupDate || new Date()}
-                                    placeholderText="Select date"
-                                    showPopperArrow={false}
-                                    calendarClassName="border border-gray-300 shadow-lg rounded-md"
-                                    dayClassName={() => "hover:bg-blue-100"}
-                                    wrapperClassName="w-full"
-                                />
-                            </div>
-                        </div>
-                    </div>
+    if (!formData.ReturnDate) {
+      alert("Please select a return date.");
+      return;
+    }
 
-                    <div className="border border-gray-300 p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Payment</h2>
-                        <p className="text-gray-600">Complete payment through GCash</p>
-                        <div className="flex justify-center w-full">
-                            <img 
-                            src="/images/qr1.png"
-                            alt="GCash QR Code" 
-                            className="w-48 h-48 object-contain border rounded-lg shadow transition-transform duration-300 hover:scale-110"
-                            />
-                        </div>
-                    </div>
+    // Open the terms modal before confirming
+    setShowTerms(true);
+  };
 
-                    <div className="border border-gray-300 p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Enter Reference Number</h2>
-                        <p className="text-gray-600 mb-2">Reference number of GCash for your booking confirmation</p>
-                        <input
-                            type="text"
-                            value={referenceNumber}
-                            onChange={(e) => setReferenceNumber(e.target.value)}
-                            placeholder="Enter GCash Reference Number"
-                            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-                </div>
+  const confirmReservation = async () => {
+    setLoading(true);
+    try {
+      await createReservation({
+        UserID: userID,
+        WearID: selectedWear.WearID,
+        AdminID: null,
+        ReservationDate: new Date().toISOString().split("T")[0], // today
+        EventDate: formData.ReturnDate, // we’ll use this as return date in DB
+        Status: "pending",
+        Notes: formData.Notes,
+      });
 
-                <div className="flex justify-between mt-8">
-                    <button className="px-6 py-2 border border-gray-400 rounded-lg font-medium hover:bg-gray-100">
-                        Back
-                    </button>
-                    <button 
-                        className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700"
-                        onClick={handleContinueClick}
-                        disabled={!pickupDate || !returnDate || !referenceNumber}
-                    >
-                        Continue
-                    </button>
-                </div>
-            </div>
+      alert("Reservation submitted successfully! Pending approval.");
+      navigate("/reservation");
+    } catch (err) {
+      console.error(err);
+      alert("Error submitting reservation. Please try again.");
+    } finally {
+      setLoading(false);
+      setShowTerms(false);
+    }
+  };
 
-            {showTermsModal && (
-                <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
-                    style={{
-                        backgroundImage: "url('images/background_resized.jpg')",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center bottom"}}>
-                    <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">InstaGuapo Terms & Conditions</h2>
-                        
-                        <div className="text-gray-700 space-y-4 mb-6">
-                            <p>After making a reservation, you must arrive at InstaGuapo, 560 JM Loyola Street, Carmona, Philippines, 4116, within 24 hours. If you do not arrive within the specified time, your reservation will not be processed.</p>
-                            
-                            <p>Balance should be paid on the pick up date and must surrender valid id upon pickup. InstaGuapo will not release the formal wear without valid id.</p>
-                            
-                            <p>Pick up time will be at 6 pm onwards on the pick up date.</p>
-                            
-                            <p>Formal Wear has to be returned on the declared date. If the item formal wear will not be returned on the said date there would be penalty of 300 pesos per day.</p>
-                        </div>
-                        
-                        <div className="flex items-center mb-6">
-                            <input
-                                type="checkbox"
-                                id="acceptTerms"
-                                checked={acceptedTerms}
-                                onChange={(e) => setAcceptedTerms(e.target.checked)}
-                                className="mr-2 h-5 w-5"
-                            />
-                            <label htmlFor="acceptTerms" className="text-gray-700">
-                                I agree to the Terms and Conditions
-                            </label>
-                        </div>
-                        
-                        <div className="flex justify-end space-x-4">
-                            <button
-                                className="px-4 py-2 border border-gray-400 rounded-lg font-medium hover:bg-gray-100"
-                                onClick={() => setShowTermsModal(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50"
-                                onClick={handleAcceptTerms}
-                                disabled={!acceptedTerms}
-                            >
-                                Accept & Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
 
-            {showSuccess && (
-                <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center z-50">
-                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Reservation successfully submitted!</span>
-                </div>
-            )}
+      <div className="max-w-lg mx-auto mt-24 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Reserve Formal Wear</h2>
+
+        {/* Formal Wear Details */}
+        {selectedWear ? (
+          <div className="mb-6 text-center">
+            <img
+              src={`http://localhost:5000${selectedWear.ImageURL}`}
+              alt={selectedWear.Name}
+              className="h-40 mx-auto object-contain mb-2"
+            />
+            <h3 className="text-xl font-semibold">{selectedWear.Name}</h3>
+            <p className="text-gray-600 font-medium">₱{selectedWear.Price}</p>
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">No formal wear selected.</p>
+        )}
+
+        {/* GCash QR */}
+        <div className="mb-6 text-center">
+          <p className="font-semibold mb-2">Scan to Pay via GCash</p>
+          <img
+            src="/images/qr1.png"
+            alt="GCash QR"
+            className="h-40 w-40 mx-auto rounded-lg border"
+          />
         </div>
-    );
+
+        {/* Reservation Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Return Date */}
+          <div>
+            <label className="block text-gray-700 mb-1">Return Date</label>
+            <input
+              type="date"
+              name="ReturnDate"
+              value={formData.ReturnDate}
+              onChange={(e) =>
+                setFormData({ ...formData, ReturnDate: e.target.value })
+              }
+              className="border rounded w-full p-2"
+              required
+            />
+          </div>
+
+          {/* GCash Reference Number */}
+          <div>
+            <label className="block text-gray-700 mb-1">
+              GCash Reference Number
+            </label>
+            <input
+              type="text"
+              name="Notes"
+              placeholder="Enter GCash Reference #"
+              value={formData.Notes}
+              onChange={(e) =>
+                setFormData({ ...formData, Notes: e.target.value })
+              }
+              className="border rounded w-full p-2"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="bg-black text-white w-full py-2 rounded hover:bg-gray-800 disabled:bg-gray-400"
+          >
+            {loading ? "Submitting..." : "Submit Reservation"}
+          </button>
+        </form>
+      </div>
+
+      {/* Terms & Conditions Modal */}
+      {showTerms && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white w-96 rounded-lg p-6 relative">
+            <button
+              className="absolute top-3 right-3 text-xl"
+              onClick={() => setShowTerms(false)}
+            >
+              ✖
+            </button>
+            <h3 className="text-lg font-bold mb-3">Terms and Conditions</h3>
+            <p className="text-sm text-gray-700 mb-4 overflow-y-auto h-40">
+              {/* You can replace this with your real terms text */}
+              1. Please handle the formal wear with care. <br />
+              2. Return the formal wear on or before the selected return date. <br />
+              3. Late returns may incur additional charges. <br />
+              4. Reservation will only be processed once payment is confirmed. <br />
+              5. Cancellations must be made at least 24 hours before event date.
+            </p>
+
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={() => setShowTerms(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmReservation}
+                className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+              >
+                I Agree
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Rprocess;

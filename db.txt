@@ -1,0 +1,175 @@
+create database Instaguapodb;
+use instaguapodb;
+CREATE TABLE User (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    FullName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(20),
+    IsVerified BOOLEAN DEFAULT FALSE,
+    VerificationCode VARCHAR(6),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ALTER TABLE admin 
+RENAME COLUMN Username to Fullname;
+ALTER TABLE Admin
+ADD COLUMN IsVerified boolean default false AFTER resetCodeExpiry;
+alter table admin
+ADD COLUMN VerificationCode VARCHAR(10) default null AFTER resetCodeExpiry;
+
+CREATE TABLE Admin (
+    AdminID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+desc Admin;
+CREATE TABLE FormalWear (
+    WearID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Category ENUM('gown', 'suit') NOT NULL,
+    Description TEXT,
+    Size VARCHAR(20),
+    Price DECIMAL(10,2) NOT NULL,
+    ImageURL VARCHAR(255), -- for storing the image path/link
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ALTER TABLE FormalWear 
+MODIFY Category ENUM('gown', 'suit', 'barong') NOT NULL;
+
+
+
+
+CREATE TABLE Reservation (
+    ReservationID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    WearID INT,
+    AdminID INT,
+    ReservationDate DATE NOT NULL,
+    EventDate DATE NOT NULL,
+    Status ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending',
+    Notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (WearID) REFERENCES FormalWear(WearID) ON DELETE CASCADE,
+    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE SET NULL
+);
+
+
+CREATE TABLE Customization (
+    CustomID INT AUTO_INCREMENT PRIMARY KEY,
+    ReservationID INT UNIQUE,
+    Theme VARCHAR(100),
+    ColorScheme VARCHAR(100),
+    AdditionalNotes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (ReservationID) REFERENCES Reservation(ReservationID) ON DELETE CASCADE
+);
+
+CREATE TABLE Design (
+    DesignID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomID INT,
+    DesignName VARCHAR(100),
+    DesignURL VARCHAR(255), -- Image or mockup URL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (CustomID) REFERENCES Customization(CustomID) ON DELETE CASCADE
+);
+
+CREATE TABLE Accessory (
+    AccessoryID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomID INT,
+    AccessoryName VARCHAR(100),
+    AccessoryType VARCHAR(50),
+    ImageURL VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (CustomID) REFERENCES Customization(CustomID) ON DELETE CASCADE
+);
+CREATE TABLE Favorite (
+    FavoriteID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    WearID INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (WearID) REFERENCES FormalWear(WearID) ON DELETE CASCADE
+);
+
+CREATE TABLE SMS_Notification (
+    SMSID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    Message TEXT NOT NULL,
+    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Status ENUM('sent', 'failed') DEFAULT 'sent',
+
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE Calendar (
+    CalendarID INT AUTO_INCREMENT PRIMARY KEY,
+    AdminID INT,
+    Title VARCHAR(100),
+    Description TEXT,
+    EventDate DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE CASCADE
+);
+CREATE TABLE roles (
+    RoleID INT AUTO_INCREMENT PRIMARY KEY,
+    RoleName VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE Admin DROP COLUMN Role;
+ALTER TABLE Admin ADD UNIQUE (Email);
+
+
+INSERT INTO roles (RoleName) VALUES ('superadmin');
+INSERT INTO roles (RoleName) VALUES ('staff');
+INSERT INTO roles (RoleName) VALUES ('user');
+
+ALTER TABLE User ADD COLUMN RoleID INT;
+
+ALTER TABLE User ADD CONSTRAINT fk_user_role FOREIGN KEY (RoleID) REFERENCES roles(RoleID) ON DELETE SET NULL;
+
+UPDATE User
+SET RoleID = (SELECT RoleID FROM roles WHERE RoleName = 'user');
+
+ALTER TABLE Admin ADD COLUMN RoleID INT;
+
+ALTER TABLE Admin ADD CONSTRAINT fk_role
+FOREIGN KEY (RoleID) REFERENCES roles(RoleID) ON DELETE SET NULL;
+
+ALTER TABLE Admin MODIFY Role VARCHAR(50);
+
+
+desc FormalWear;
+desc User;
+select * from Admin;  
+use instaguapodb;
+select * from User where email ='';
+SELECT userid FROM User WHERE email = 'markaldas2002@gmail.com';
+delete from admin WHERE Fullname = "admin01";
+delete from admin where Email = 'markaldas2002@gmail.com';
+
+SELECT resetToken, resetTokenExpiry 
+FROM User 
+WHERE Email = 'markaldas2002@gmail.com';
+
+alter table admin drop column resetcodeexpiry;
+SELECT Email, resetToken, resetTokenExpiry 
+FROM User 
+WHERE resetToken IS NOT NULL;
+alter table User modify VerificationCode varchar(6);

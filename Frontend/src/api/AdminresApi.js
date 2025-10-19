@@ -1,8 +1,6 @@
-const API_URL = "http://localhost:5000/api/reservations";
-
 
 export async function getReservations() {
-  const response = await fetch(API_URL, {
+  const response = await fetch("http://localhost:5000/api/reservations", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -18,7 +16,7 @@ export async function getReservations() {
 
 
 export async function updateReservationStatus({ id, status }) {
-  const response = await fetch(`${API_URL}/${id}/status`, {
+  const response = await fetch(`http://localhost:5000/api/reservations/${id}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
@@ -27,7 +25,7 @@ export async function updateReservationStatus({ id, status }) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Failed to update status.");
+    throw new Error(data.message || "Failed to update reservation status.");
   }
 
   return data;
@@ -35,7 +33,7 @@ export async function updateReservationStatus({ id, status }) {
 
 
 export async function deleteReservation(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`http://localhost:5000/api/reservations/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
   });

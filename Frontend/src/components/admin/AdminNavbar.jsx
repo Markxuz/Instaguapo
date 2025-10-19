@@ -26,7 +26,7 @@ const AdminNavbar = () => {
         <div className="hidden md:flex flex-1 justify-center">
           <ul className="flex space-x-6">
             <li><Link to="/admin-dashboard" className="text-gray-600 hover:text-blue-600 px-3 py-2">Home</Link></li>
-            <li><Link to="/AdminCollection" className="text-gray-600 hover:text-blue-600 px-3 py-2">Collection</Link></li>
+            <li><Link to="/admin-collection" className="text-gray-600 hover:text-blue-600 px-3 py-2">Collection</Link></li>
             <li><Link to="/AdminReservation" className="text-gray-600 hover:text-blue-600 px-3 py-2">Reservation</Link></li>
             <li><Link to="/AdminCalendar" className="text-gray-600 hover:text-blue-600 px-3 py-2">Calendar</Link></li>
           </ul>
