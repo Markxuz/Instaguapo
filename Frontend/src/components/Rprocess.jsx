@@ -1,63 +1,74 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { createReservation } from "../api/ReservationApi";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { createReservation, getBookedDates } from "../api/ReservationApi";
 
-function Rprocess() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const selectedWear = location.state?.item; // data passed from Collection
+function Rprocess({ user, selectedItem }) {
+  const [reservationDate, setReservationDate] = useState(null);
+  const [returnDate, setReturnDate] = useState(null);
+  const [bookedDates, setBookedDates] = useState([]);
+  const [gcashReference, setGcashReference] = useState("");
+  const [showTerms, setShowTerms] = useState(false);
 
-  const [formData, setFormData] = useState({
-    ReturnDate: "",
-    Notes: "", // GCash Reference number
-  });
+  // ✅ Fetch booked dates for this specific formal wear
+  useEffect(() => {
+    async function fetchBookedDates() {
+      try {
+        if (!selectedItem?.WearID) return;
+        const data = await getBookedDates(selectedItem.WearID);
 
-  const [loading, setLoading] = useState(false);
-  const [showTerms, setShowTerms] = useState(false); // Modal toggle
+        const disabled = [];
+        data.forEach(({ ReservationDate, ReturnDate }) => {
+          let start = new Date(ReservationDate);
+          let end = new Date(ReturnDate);
+          while (start <= end) {
+            disabled.push(new Date(start));
+            start.setDate(start.getDate() + 1);
+          }
+        });
 
-  // Get logged-in user ID from localStorage
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userID = user ? user.UserID : null;
+        setBookedDates(disabled);
+      } catch (err) {
+        console.error("Error fetching booked dates:", err);
+      }
+    }
 
-  // Submit handler
-  const handleSubmit = (e) => {
+    fetchBookedDates();
+  }, [selectedItem]);
+
+  // ✅ Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!userID) {
-      alert("Please log in first before reserving.");
+
+    if (!reservationDate || !returnDate) {
+      alert("Please select both Reservation and Return dates.");
       return;
     }
 
-    if (!formData.ReturnDate) {
-      alert("Please select a return date.");
-      return;
-    }
-
-    // Open the terms modal before confirming
-    setShowTerms(true);
+    setShowTerms(true); // open terms modal before saving
   };
 
+  // ✅ Confirm reservation after accepting terms
   const confirmReservation = async () => {
-    setLoading(true);
     try {
+      const formattedReservationDate = reservationDate.toISOString().split("T")[0];
+      const formattedReturnDate = returnDate.toISOString().split("T")[0];
+
       await createReservation({
-        UserID: userID,
-        WearID: selectedWear.WearID,
-        AdminID: null,
-        ReservationDate: new Date().toISOString().split("T")[0], // today
-        EventDate: formData.ReturnDate, // we’ll use this as return date in DB
+        UserID: user.UserID, // ✅ automatically include user ID
+        WearID: selectedItem.WearID,
+        ReservationDate: formattedReservationDate,
+        EventDate: formattedReturnDate, // using EventDate column as ReturnDate
         Status: "pending",
-        Notes: formData.Notes,
+        Notes: `GCash Ref: ${gcashReference}`,
       });
 
-      alert("Reservation submitted successfully! Pending approval.");
-      navigate("/reservation");
+      alert("Reservation submitted successfully!");
+      setShowTerms(false);
     } catch (err) {
       console.error(err);
-      alert("Error submitting reservation. Please try again.");
-    } finally {
-      setLoading(false);
-      setShowTerms(false);
+      alert("Error creating reservation.");
     }
   };
 
@@ -65,109 +76,100 @@ function Rprocess() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
 
-      <div className="max-w-lg mx-auto mt-24 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Reserve Formal Wear</h2>
+      <div className="container mx-auto p-6 mt-10 bg-white rounded-lg shadow-md max-w-lg">
+        <h2 className="text-2xl font-bold mb-6 text-center">Reservation Process</h2>
 
-        {/* Formal Wear Details */}
-        {selectedWear ? (
-          <div className="mb-6 text-center">
-            <img
-              src={`http://localhost:5000${selectedWear.ImageURL}`}
-              alt={selectedWear.Name}
-              className="h-40 mx-auto object-contain mb-2"
-            />
-            <h3 className="text-xl font-semibold">{selectedWear.Name}</h3>
-            <p className="text-gray-600 font-medium">₱{selectedWear.Price}</p>
-          </div>
-        ) : (
-          <p className="text-center text-gray-500">No formal wear selected.</p>
-        )}
-
-        {/* GCash QR */}
-        <div className="mb-6 text-center">
-          <p className="font-semibold mb-2">Scan to Pay via GCash</p>
-          <img
-            src="/images/qr1.png"
-            alt="GCash QR"
-            className="h-40 w-40 mx-auto rounded-lg border"
-          />
-        </div>
-
-        {/* Reservation Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Return Date */}
+          {/* FORMAL WEAR DETAILS */}
+          <div className="text-center">
+            <img
+              src={`http://localhost:5000${selectedItem?.ImageURL}`}
+              alt={selectedItem?.Name}
+              className="mx-auto h-48 object-contain rounded"
+            />
+            <h3 className="font-bold mt-2">{selectedItem?.Name}</h3>
+            <p className="text-gray-600">₱{selectedItem?.Price}</p>
+          </div>
+
+          {/* DATES */}
           <div>
-            <label className="block text-gray-700 mb-1">Return Date</label>
+            <label className="block font-semibold mb-1">Reservation Date:</label>
+            <DatePicker
+              selected={reservationDate}
+              onChange={(date) => setReservationDate(date)}
+              minDate={new Date()}
+              excludeDates={bookedDates}
+              placeholderText="Select reservation date"
+              className="border p-2 rounded w-full"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-1">Return Date:</label>
+            <DatePicker
+              selected={returnDate}
+              onChange={(date) => setReturnDate(date)}
+              minDate={reservationDate || new Date()}
+              excludeDates={bookedDates}
+              placeholderText="Select return date"
+              className="border p-2 rounded w-full"
+            />
+          </div>
+
+          {/* GCASH PAYMENT */}
+          <div>
+            <label className="block font-semibold mb-1">Gcash Reference Number:</label>
             <input
-              type="date"
-              name="ReturnDate"
-              value={formData.ReturnDate}
-              onChange={(e) =>
-                setFormData({ ...formData, ReturnDate: e.target.value })
-              }
-              className="border rounded w-full p-2"
+              type="text"
+              value={gcashReference}
+              onChange={(e) => setGcashReference(e.target.value)}
+              placeholder="Enter your GCash reference number"
+              className="border p-2 rounded w-full"
               required
             />
           </div>
 
-          {/* GCash Reference Number */}
-          <div>
-            <label className="block text-gray-700 mb-1">
-              GCash Reference Number
-            </label>
-            <input
-              type="text"
-              name="Notes"
-              placeholder="Enter GCash Reference #"
-              value={formData.Notes}
-              onChange={(e) =>
-                setFormData({ ...formData, Notes: e.target.value })
-              }
-              className="border rounded w-full p-2"
+          <div className="text-center">
+            <img
+              src="/images/gcash_qr.png"
+              alt="Gcash QR"
+              className="mx-auto h-40 object-contain my-3"
             />
+            <p className="text-sm text-gray-500">Scan this QR to pay before confirming.</p>
           </div>
 
+          {/* SUBMIT */}
           <button
             type="submit"
-            className="bg-black text-white w-full py-2 rounded hover:bg-gray-800 disabled:bg-gray-400"
+            className="bg-black text-white px-6 py-2 rounded w-full hover:bg-gray-800"
           >
-            {loading ? "Submitting..." : "Submit Reservation"}
+            Submit Reservation
           </button>
         </form>
       </div>
 
-      {/* Terms & Conditions Modal */}
+      {/* TERMS MODAL */}
       {showTerms && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-white w-96 rounded-lg p-6 relative">
-            <button
-              className="absolute top-3 right-3 text-xl"
-              onClick={() => setShowTerms(false)}
-            >
-              ✖
-            </button>
-            <h3 className="text-lg font-bold mb-3">Terms and Conditions</h3>
-            <p className="text-sm text-gray-700 mb-4 overflow-y-auto h-40">
-              {/* You can replace this with your real terms text */}
-              1. Please handle the formal wear with care. <br />
-              2. Return the formal wear on or before the selected return date. <br />
-              3. Late returns may incur additional charges. <br />
-              4. Reservation will only be processed once payment is confirmed. <br />
-              5. Cancellations must be made at least 24 hours before event date.
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-[400px] shadow-xl">
+            <h3 className="text-xl font-bold mb-4">Terms and Conditions</h3>
+            <p className="text-sm text-gray-700 mb-4">
+              By submitting this reservation, you agree that cancellations must be made at
+              least 3 days before the reservation date. Payment is non-refundable after
+              confirmation.
             </p>
-
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setShowTerms(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                className="px-4 py-2 border rounded"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmReservation}
-                className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                className="px-4 py-2 bg-black text-white rounded"
               >
-                I Agree
+                Agree & Confirm
               </button>
             </div>
           </div>

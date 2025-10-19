@@ -65,6 +65,22 @@ export async function updateReservation({ id, Status, Notes }) {
   return data;
 }
 
+export async function getBookedDates(wearID) {
+  const response = await fetch(`http://localhost:5000/api/reservations/booked/${wearID}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch booked dates.");
+  }
+
+  return data;
+}
+
+
 // Delete Reservation
 export async function deleteReservation(id) {
   const response = await fetch(`http://localhost:5000/api/reservations/${id}`, {
