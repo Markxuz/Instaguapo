@@ -24,28 +24,25 @@ exports.getAllReservations = (req, res) => {
 
 // Create new reservation
 exports.createReservation = (req, res) => {
-  const { UserID, WearID, AdminID, ReservationDate, EventDate, Notes } = req.body;
+  const { UserID, WearID, ReservationDate, EventDate, Status, Notes } = req.body;
 
-  // Default values
-  const status = "pending";
-  const admin = AdminID || null;
-  const notes = Notes || null; // can store GCash reference number
+  if (!UserID || !WearID || !ReservationDate || !EventDate) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
 
   const query = `
-    INSERT INTO Reservation 
-    (UserID, WearID, AdminID, ReservationDate, EventDate, Status, Notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO Reservation (UserID, WearID, ReservationDate, EventDate, Status, Notes)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   db.query(
     query,
-    [UserID, WearID, admin, ReservationDate, EventDate, status, notes],
+    [UserID, WearID, ReservationDate, EventDate, Status || "pending", Notes || null],
     (err, result) => {
-      if (err)
-        return res
-          .status(500)
-          .json({ message: "Error creating reservation", error: err });
-
+      if (err) {
+        console.error("DB Insert Error:", err);
+        return res.status(500).json({ message: "Error creating reservation", error: err });
+      }
       res.status(201).json({
         message: "Reservation created successfully",
         reservationID: result.insertId,
@@ -53,6 +50,7 @@ exports.createReservation = (req, res) => {
     }
   );
 };
+
 
 // Update reservation
 exports.updateReservation = (req, res) => {

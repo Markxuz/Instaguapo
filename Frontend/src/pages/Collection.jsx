@@ -30,7 +30,7 @@ function Collection() {
     setSelectedItem(null);
   };
 
-  // Group by Category (suit, gown, barong)
+  // Pang group sa mga items (Suits, Barong, Gowns)
   const groupedItems = allItems.reduce((groups, item) => {
     const category = item.Category || "Uncategorized";
     if (!groups[category]) groups[category] = [];
@@ -42,7 +42,7 @@ function Collection() {
     <div className="min-h-screen bg-gray-100 pt-2">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-14">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Collections</h2>
 
         {Object.keys(groupedItems).length === 0 ? (
@@ -57,7 +57,7 @@ function Collection() {
                 {groupedItems[category].map((item) => (
                   <div
                     key={item.WearID}
-                    className="bg-white shadow-md rounded-lg p-4"
+                    className="bg-white shadow-md rounded-lg p-4 border-4 border-gray-400 hover:border-black transition-all duration-300"
                   >
                     <div className="h-40 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
                       <img

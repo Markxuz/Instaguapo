@@ -2,6 +2,8 @@ import { FiSettings, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const CollectionModal = ({ item, onClose }) => {
+  const user = JSON.parse(localStorage.getItem("user")); // ✅ get logged-in user
+
   if (!item) return null;
 
   return (
@@ -24,17 +26,12 @@ const CollectionModal = ({ item, onClose }) => {
         </button>
 
         <div className="flex flex-col items-center">
-          {/* Image Display */}
           <div className="border rounded-lg p-2 mb-2 relative w-48 h-48 flex items-center justify-center bg-gray-100">
             <img
               src={`http://localhost:5000${item.ImageURL}`}
               alt={item.Name}
               className="object-contain max-h-full max-w-full"
             />
-            <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs">
-              1/3
-            </span>
-            <button className="absolute bottom-2 right-2 text-xs">⤢</button>
           </div>
 
           {/* Details */}
@@ -52,7 +49,8 @@ const CollectionModal = ({ item, onClose }) => {
             <FiHeart className="text-blue-600 text-xl cursor-pointer" />
           </div>
 
-          <Link to="/Rprocess" state={{ item }}>
+          {/* ✅ Pass user and selectedItem */}
+          <Link to="/Rprocess" state={{ user, selectedItem: item }}>
             <button className="mt-4 px-4 py-2 bg-black text-white rounded-lg font-semibold hover:bg-gray-700">
               RESERVE NOW
             </button>

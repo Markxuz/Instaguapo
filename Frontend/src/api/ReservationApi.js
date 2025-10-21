@@ -4,9 +4,9 @@
 export async function createReservation({
   UserID,
   WearID,
-  AdminID = null,
   ReservationDate,
   EventDate,
+  Status,
   Notes,
 }) {
   const response = await fetch("http://localhost:5000/api/reservations", {
@@ -15,10 +15,9 @@ export async function createReservation({
     body: JSON.stringify({
       UserID,
       WearID,
-      AdminID,
       ReservationDate,
       EventDate,
-      Status: "pending", // default on create
+      Status,
       Notes,
     }),
   });
@@ -26,11 +25,13 @@ export async function createReservation({
   const data = await response.json();
 
   if (!response.ok) {
+    console.error("Reservation API Error:", data);
     throw new Error(data.message || "Failed to create reservation. Please try again.");
   }
 
   return data;
 }
+
 
 // Get All Reservations
 export async function getReservations() {
