@@ -34,6 +34,8 @@ function Login() {
 
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userID", user.UserID);
+
 
       navigate("/Mainpage");
     } catch (error) {

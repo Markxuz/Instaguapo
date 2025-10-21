@@ -1,6 +1,4 @@
-// ReservationApi.js
-
-// Create Reservation
+// Pang gawa ng reservation
 export async function createReservation({
   UserID,
   WearID,
@@ -33,7 +31,7 @@ export async function createReservation({
 }
 
 
-// Get All Reservations
+// Pang kuha ng reservations
 export async function getReservations() {
   const response = await fetch("http://localhost:5000/api/reservations", {
     method: "GET",
@@ -49,7 +47,7 @@ export async function getReservations() {
   return data;
 }
 
-// Update Reservation
+// eto naman pang update ng reservation
 export async function updateReservation({ id, Status, Notes }) {
   const response = await fetch(`http://localhost:5000/api/reservations/${id}`, {
     method: "PUT",
@@ -82,7 +80,7 @@ export async function getBookedDates(wearID) {
 }
 
 
-// Delete Reservation
+// delete Reservation
 export async function deleteReservation(id) {
   const response = await fetch(`http://localhost:5000/api/reservations/${id}`, {
     method: "DELETE",

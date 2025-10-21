@@ -22,6 +22,27 @@ exports.getAllReservations = (req, res) => {
   });
 };
 
+// Pang kuha ng reservations gamit young user ID
+exports.getReservationsByUser = (req, res) => {
+  const { userID } = req.params;
+  const query = `
+    SELECT r.*, 
+           u.FullName AS UserName, 
+           f.Name AS FormalWearName,
+           f.ImageURL AS FormalWearImage
+    FROM Reservation r
+    LEFT JOIN User u ON r.UserID = u.UserID
+    LEFT JOIN FormalWear f ON r.WearID = f.WearID
+    WHERE r.UserID = ?
+    ORDER BY r.created_at DESC
+  `;
+  db.query(query, [userID], (err, results) => {
+    if (err)
+      return res.status(500).json({ message: "Error fetching user reservations", error: err });
+    res.status(200).json(results);
+  });
+};
+
 // Create new reservation
 exports.createReservation = (req, res) => {
   const { UserID, WearID, ReservationDate, EventDate, Status, Notes } = req.body;
