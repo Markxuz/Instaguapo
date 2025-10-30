@@ -6,5 +6,6 @@ router.get("/", adminReservationController.getReservations);
 router.post("/", adminReservationController.addReservation);
 router.put("/:id/status", adminReservationController.updateReservationStatus);
 router.delete("/:id", adminReservationController.deleteReservation);
+router.get("/total/month", adminReservationController.getTotalReservationsThisMonth);
 
 module.exports = router;

@@ -1,9 +1,11 @@
-// Pang gawa ng reservation
+// paggawa ng reservation
 export async function createReservation({
   UserID,
   WearID,
   ReservationDate,
   EventDate,
+  ReturnDate,
+  Amount,
   Status,
   Notes,
 }) {
@@ -15,6 +17,8 @@ export async function createReservation({
       WearID,
       ReservationDate,
       EventDate,
+      ReturnDate,
+      Amount,
       Status,
       Notes,
     }),
@@ -31,7 +35,8 @@ export async function createReservation({
 }
 
 
-// Pang kuha ng reservations
+
+// Pangkuha ng reservations
 export async function getReservations() {
   const response = await fetch("http://localhost:5000/api/reservations", {
     method: "GET",

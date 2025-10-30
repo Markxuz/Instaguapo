@@ -31,9 +31,9 @@ function SettingsModal({ onClose, pushEnabled, togglePush, onLogout }) {
             {pushEnabled ? <span>&#x2611;</span> : <span>&#x2610;</span>}
           </button>
         </div>
-        <div className="hover:bg-red-50 transition">
+        <div className="hover:bg-red-300 transition">
           <button
-            className="flex items-center text-red-600 font-semibold px-6 py-4"
+            className="flex items-center text-red-700 font-semibold px-6 py-4"
             onClick={onLogout}
           >
             <FiLogOut className="mr-2 text-lg" />

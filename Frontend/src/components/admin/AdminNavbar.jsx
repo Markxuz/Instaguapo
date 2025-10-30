@@ -20,15 +20,15 @@ const AdminNavbar = () => {
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-10">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo</h1>
+        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo.</h1>
 
 
         <div className="hidden md:flex flex-1 justify-center">
           <ul className="flex space-x-6">
-            <li><Link to="/admin-dashboard" className="text-gray-600 hover:text-blue-600 px-3 py-2">Home</Link></li>
-            <li><Link to="/admin-collection" className="text-gray-600 hover:text-blue-600 px-3 py-2">Collection</Link></li>
-            <li><Link to="/AdminReservation" className="text-gray-600 hover:text-blue-600 px-3 py-2">Reservation</Link></li>
-            <li><Link to="/AdminCalendar" className="text-gray-600 hover:text-blue-600 px-3 py-2">Calendar</Link></li>
+            <li><Link to="/admin-dashboard" className="text-black hover:text-blue-600 px-3 py-2">Home</Link></li>
+            <li><Link to="/admin-collection" className="text-black hover:text-blue-600 px-3 py-2">Collection</Link></li>
+            <li><Link to="/AdminReservation" className="text-black hover:text-blue-600 px-3 py-2">Reservation</Link></li>
+            <li><Link to="/AdminCalendar" className="text-black hover:text-blue-600 px-3 py-2">Calendar</Link></li>
           </ul>
         </div>
 

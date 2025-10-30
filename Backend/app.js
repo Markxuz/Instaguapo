@@ -7,10 +7,8 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
-
 
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admins", adminRoutes);
@@ -21,6 +19,8 @@ app.use("/api/formalwear", formalWearRoutes);
 const reservationRoutes = require("./routes/reservationRoutes");
 app.use("/api/reservations", reservationRoutes);
 
+const adminReservationRoutes = require("./routes/adminreservationRoutes");
+app.use("/api/admin/reservations", adminReservationRoutes);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
