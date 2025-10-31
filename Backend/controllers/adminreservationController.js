@@ -1,6 +1,6 @@
 import db from "../config/db.js";
 
-// ✅ Get all reservations (Customer + Formal Wear + Admin)
+// get ng lahat ng reservation (Customer + Formal Wear + Admin)
 export const getReservations = (req, res) => {
   const query = `
     SELECT 
@@ -33,7 +33,7 @@ export const getReservations = (req, res) => {
   });
 };
 
-// ✅ Add a new reservation (Admin can add manually)
+// Add ng bagong reservation (Admin can add manually)
 export const addReservation = (req, res) => {
   const { UserID, WearID, AdminID, ReservationDate, EventDate, ReturnDate, Amount, Notes } = req.body;
 
@@ -56,7 +56,7 @@ export const addReservation = (req, res) => {
   );
 };
 
-// ✅ Update reservation status (Confirm / Cancel / Complete)
+// pang update ng reservation status(Confirm / Cancel / Complete)
 export const updateReservationStatus = (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -72,7 +72,7 @@ export const updateReservationStatus = (req, res) => {
   });
 };
 
-// ✅ Delete a reservation
+// pang delete ng reservation
 export const deleteReservation = (req, res) => {
   const { id } = req.params;
 
@@ -85,6 +85,7 @@ export const deleteReservation = (req, res) => {
   });
 };
 
+// pang get ng total reservations for dashboard
 export const getTotalReservationsThisMonth = (req, res) => {
   const query = `
     SELECT COUNT(*) AS total 
@@ -99,5 +100,50 @@ export const getTotalReservationsThisMonth = (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     res.json({ total: result[0].total });
+  });
+};
+
+
+// kukunin neto ang yearly total reservations for dashboard of reservations
+export const getTotalReservationsThisYear = (req, res) => {
+  const query = `
+    SELECT COUNT(*) AS total 
+    FROM Reservation
+    WHERE YEAR(ReservationDate) = YEAR(CURRENT_DATE());
+  `;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Error fetching yearly total reservations:", err);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ total: result[0].total });
+  });
+};
+
+// Get reservations filtered by year
+export const getReservationsByYear = (req, res) => {
+  const { year } = req.params;
+
+  const query = `
+    SELECT 
+      r.ReservationID, 
+      u.FullName AS Customer, 
+      f.Name AS FormalWearName, 
+      r.ReservationDate, 
+      r.Status
+    FROM Reservation r
+    JOIN User u ON r.UserID = u.UserID
+    JOIN FormalWear f ON r.WearID = f.WearID
+    WHERE YEAR(r.ReservationDate) = ?
+    ORDER BY r.ReservationDate DESC
+  `;
+
+  db.query(query, [year], (err, rows) => {
+    if (err) {
+      console.error("Error fetching reservations by year:", err);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
   });
 };

@@ -18,6 +18,7 @@ import AdminLogin from "./pages/adminblock/AdminLogin";
 import AdVerificationForm from "./components/admin/Adverificationform";
 import AdDash from "./pages/adminblock/AdDash";
 import AdminCollection from "./pages/adminblock/AdminCollection";
+import AdminReservation from "./pages/adminblock/AdminReservation";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/admin-verification" element={<AdVerificationForm />} />
                 <Route path="/admin-dashboard" element={<AdDash />} />
                 <Route path="/admin-collection" element={<AdminCollection />} />
+                <Route path="/admin-reservation" element={<AdminReservation />} />
 
 
                 <Route path="/mainpage" element={<Mainpage />} />
