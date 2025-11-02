@@ -136,18 +136,28 @@ exports.updateReservation = (req, res) => {
   );
 };
 
+// ✅ Get booked date ranges (ReservationDate → ReturnDate)
 exports.getBookedDates = (req, res) => {
   const { wearID } = req.params;
   const query = `
-    SELECT ReservationDate, EventDate AS ReturnDate
+    SELECT ReservationDate, ReturnDate
     FROM Reservation
-    WHERE WearID = ? AND Status IN ('pending', 'confirmed')
+    WHERE WearID = ? 
+      AND Status IN ('pending', 'confirmed')
+      AND ReturnDate IS NOT NULL
   `;
+
   db.query(query, [wearID], (err, results) => {
-    if (err) return res.status(500).json({ message: "Error fetching booked dates", error: err });
+    if (err) {
+      console.error("Error fetching booked dates:", err);
+      return res
+        .status(500)
+        .json({ message: "Error fetching booked dates", error: err });
+    }
     res.status(200).json(results);
   });
 };
+
 
 // Delete reservation
 exports.deleteReservation = (req, res) => {

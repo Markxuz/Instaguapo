@@ -26,24 +26,33 @@ function Rprocess() {
     }
   }, [user, selectedItem, navigate]);
 
-  // Fetch booked dates
+  // ✅ Convert start–end range to array of dates
+  const getDateRange = (start, end) => {
+    const range = [];
+    const current = new Date(start);
+    while (current <= new Date(end)) {
+      range.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+    return range;
+  };
+
+  // ✅ Fetch booked dates (include full range)
   useEffect(() => {
     async function fetchBookedDates() {
       try {
         if (!selectedItem?.WearID) return;
         const data = await getBookedDates(selectedItem.WearID);
 
-        const disabled = [];
+        const allBooked = [];
         data.forEach(({ ReservationDate, ReturnDate }) => {
-          let start = new Date(ReservationDate);
-          let end = new Date(ReturnDate);
-          while (start <= end) {
-            disabled.push(new Date(start));
-            start.setDate(start.getDate() + 1);
+          if (ReservationDate && ReturnDate) {
+            const range = getDateRange(ReservationDate, ReturnDate);
+            allBooked.push(...range);
           }
         });
 
-        setBookedDates(disabled);
+        setBookedDates(allBooked);
       } catch (err) {
         console.error("Error fetching booked dates:", err);
       }
@@ -51,6 +60,12 @@ function Rprocess() {
 
     fetchBookedDates();
   }, [selectedItem]);
+
+  // ✅ Check if date is already booked
+  const isDateBooked = (date) =>
+    bookedDates.some(
+      (booked) => booked.toDateString() === date.toDateString()
+    );
 
   // Handle form submit
   const handleSubmit = (e) => {
@@ -115,7 +130,7 @@ function Rprocess() {
             <p className="text-gray-600">₱{selectedItem?.Price}</p>
           </div>
 
-          {/* Dates */}
+          {/* Reservation Date */}
           <div>
             <label className="block font-semibold mb-1">Reservation Date:</label>
             <DatePicker
@@ -124,10 +139,17 @@ function Rprocess() {
               minDate={new Date()}
               excludeDates={bookedDates}
               placeholderText="Select reservation date"
+              dayClassName={(date) =>
+                isDateBooked(date)
+                  ? "bg-red-500 text-white rounded-full cursor-not-allowed"
+                  : undefined
+              }
+              filterDate={(date) => !isDateBooked(date)}
               className="border p-2 rounded w-full"
             />
           </div>
 
+          {/* Pick-up Date */}
           <div>
             <label className="block font-semibold mb-1">Pick-up Date:</label>
             <DatePicker
@@ -136,10 +158,17 @@ function Rprocess() {
               minDate={reservationDate || new Date()}
               excludeDates={bookedDates}
               placeholderText="Select pick-up date"
+              dayClassName={(date) =>
+                isDateBooked(date)
+                  ? "bg-red-500 text-white rounded-full cursor-not-allowed"
+                  : undefined
+              }
+              filterDate={(date) => !isDateBooked(date)}
               className="border p-2 rounded w-full"
             />
           </div>
 
+          {/* Return Date */}
           <div>
             <label className="block font-semibold mb-1">Return Date:</label>
             <DatePicker
@@ -148,6 +177,12 @@ function Rprocess() {
               minDate={pickUpDate || reservationDate || new Date()}
               excludeDates={bookedDates}
               placeholderText="Select return date"
+              dayClassName={(date) =>
+                isDateBooked(date)
+                  ? "bg-red-500 text-white rounded-full cursor-not-allowed"
+                  : undefined
+              }
+              filterDate={(date) => !isDateBooked(date)}
               className="border p-2 rounded w-full"
             />
           </div>
