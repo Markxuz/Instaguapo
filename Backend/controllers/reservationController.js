@@ -71,7 +71,7 @@ exports.createReservation = (req, res) => {
     return res.status(400).json({ message: "Missing required fields." });
   }
 
-  // 🔹 Step 1: Get the Price from FormalWear table
+  // Get the Price from FormalWear table
   const priceQuery = "SELECT Price FROM FormalWear WHERE WearID = ?";
 
   db.query(priceQuery, [WearID], (err, result) => {
@@ -82,7 +82,7 @@ exports.createReservation = (req, res) => {
 
     const wearPrice = result[0]?.Price || 0;
 
-    // 🔹 Step 2: Insert reservation with that price as Amount
+    // Insert reservation with that price as Amount
     const insertQuery = `
       INSERT INTO Reservation 
       (UserID, WearID, ReservationDate, EventDate, ReturnDate, Amount, Status, Notes)
@@ -136,7 +136,7 @@ exports.updateReservation = (req, res) => {
   );
 };
 
-// ✅ Get booked date ranges (ReservationDate → ReturnDate)
+//  Get booked date ranges (ReservationDate → ReturnDate)
 exports.getBookedDates = (req, res) => {
   const { wearID } = req.params;
   const query = `

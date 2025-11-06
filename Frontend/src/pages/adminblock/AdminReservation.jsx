@@ -56,7 +56,16 @@ const AdminReservation = () => {
           <h2 className="text-lg font-semibold text-gray-600 mb-2">Current Year</h2>
           <p className="text-4xl font-bold">{selectedYear}</p>
         </div>
+
+        <div className="bg-white border border-gray-400 shadow-md rounded-xl p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
+          <h2 className="text-lg font-semibold text-gray-600 mb-2">Pending Requests</h2>
+          <p className="text-4xl font-bold">{selectedYear}</p>
+        </div>
+
+
+
       </div>
+      
 
       {/* Filter */}
       <div className="flex justify-between items-center mb-4">

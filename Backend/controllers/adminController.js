@@ -3,12 +3,14 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const { sendVerificationEmail, sendPasswordResetEmail } = require("../utils/mailer");
 const jwt = require("jsonwebtoken");
+const db = require("../config/db");
 
+// ======================= SIGNUP =======================
 const signup = async (req, res) => {
-  const { Fullname, Email,  PhoneNumber, Password, RoleID } = req.body;
+  const { Fullname, Email, PhoneNumber, Password, RoleID } = req.body;
   const VerificationCode = crypto.randomInt(100000, 1000000).toString();
 
-  if (!Fullname || !Email || !PhoneNumber || !Password ) {
+  if (!Fullname || !Email || !PhoneNumber || !Password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -54,6 +56,7 @@ const signup = async (req, res) => {
   }
 };
 
+// ======================= VERIFY ADMIN =======================
 const verifyAdmin = (req, res) => {
   const { Email, VerificationCode } = req.body;
 
@@ -75,6 +78,7 @@ const verifyAdmin = (req, res) => {
   });
 };
 
+// ======================= LOGIN =======================
 const loginAdmin = async (req, res) => {
   const { Email, Password } = req.body;
 
@@ -99,10 +103,40 @@ const loginAdmin = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token, admin });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      admin: {
+        AdminID: admin.AdminID,
+        Fullname: admin.Fullname,
+        Email: admin.Email,
+        PhoneNumber: admin.PhoneNumber,
+        RoleID: admin.RoleID,
+        ProfilePhoto: admin.ProfilePhoto || null,
+      },
+    });
   });
 };
 
+// ======================= GET ADMIN PROFILE =======================
+const getAdminProfile = (req, res) => {
+  const adminId = req.user.id;
+
+  const sql = `
+    SELECT AdminID, Fullname, Email, PhoneNumber, RoleID, ProfilePhoto, created_at, updated_at
+    FROM Admin
+    WHERE AdminID = ?
+  `;
+
+  db.query(sql, [adminId], (err, results) => {
+    if (err) return res.status(500).json({ message: "Database error", err });
+    if (results.length === 0) return res.status(404).json({ message: "Admin not found" });
+
+    res.status(200).json({ admin: results[0] });
+  });
+};
+
+// ======================= FORGOT PASSWORD =======================
 const forgotPassword = async (req, res) => {
   const { Email } = req.body;
 
@@ -127,6 +161,7 @@ const forgotPassword = async (req, res) => {
   });
 };
 
+// ======================= RESET PASSWORD =======================
 const resetPassword = async (req, res) => {
   const { Email, code, newPassword } = req.body;
 
@@ -137,10 +172,7 @@ const resetPassword = async (req, res) => {
 
     const admin = results[0];
 
-    if (
-      admin.resetCode !== code ||
-      new Date(admin.resetCodeExpiry) < new Date()
-    ) {
+    if (admin.resetCode !== code || new Date(admin.resetCodeExpiry) < new Date()) {
       return res.status(400).json({ message: "Invalid or expired code" });
     }
 
@@ -153,6 +185,7 @@ const resetPassword = async (req, res) => {
   });
 };
 
+// ======================= DELETE ADMIN =======================
 const deleteAdmin = (req, res) => {
   const adminId = req.user.id;
 
@@ -163,11 +196,76 @@ const deleteAdmin = (req, res) => {
   });
 };
 
+
+// ======================= UPDATE PROFILE =======================
+const updateProfile = (req, res) => {
+  const adminId = req.user.id;
+  const { Fullname, Email, PhoneNumber } = req.body;
+  let profilePhotoPath = null;
+
+  // If a file was uploaded, save its path
+  if (req.file) {
+    profilePhotoPath = `uploads/${req.file.filename}`;
+  }
+
+  // SQL for update
+  const sql = profilePhotoPath
+    ? `
+        UPDATE Admin
+        SET Fullname = ?, Email = ?, PhoneNumber = ?, ProfilePhoto = ?, updated_at = NOW()
+        WHERE AdminID = ?
+      `
+    : `
+        UPDATE Admin
+        SET Fullname = ?, Email = ?, PhoneNumber = ?, updated_at = NOW()
+        WHERE AdminID = ?
+      `;
+
+  const params = profilePhotoPath
+    ? [Fullname, Email, PhoneNumber, profilePhotoPath, adminId]
+    : [Fullname, Email, PhoneNumber, adminId];
+
+  db.query(sql, params, (err) => {
+    if (err) {
+      console.error("Error updating profile:", err);
+      return res.status(500).json({ message: "Server error updating profile" });
+    }
+
+    // Fetch the updated record and send back full data
+    const fetchSql = `
+      SELECT AdminID, Fullname, Email, PhoneNumber, ProfilePhoto
+      FROM Admin
+      WHERE AdminID = ?
+    `;
+
+    db.query(fetchSql, [adminId], (err, results) => {
+      if (err || results.length === 0) {
+        return res.status(500).json({ message: "Error fetching updated profile" });
+      }
+
+      const updatedAdmin = results[0];
+      // ✅ Include full URL for image preview in frontend
+      const imageUrl = updatedAdmin.ProfilePhoto
+        ? `http://localhost:5000/${updatedAdmin.ProfilePhoto}`
+        : null;
+
+      res.status(200).json({
+        message: "Profile updated successfully",
+        admin: { ...updatedAdmin, ProfilePhoto: imageUrl },
+      });
+    });
+  });
+};
+
+
+
 module.exports = {
   signup,
   verifyAdmin,
   loginAdmin,
+  getAdminProfile,
   forgotPassword,
   resetPassword,
   deleteAdmin,
+  updateProfile,
 };

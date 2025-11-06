@@ -24,7 +24,7 @@ const sendPasswordResetEmail = (to, code) => {
   const mailOptions = {
     from: '"Instaguapo" <markaldas2002@gmail.com>',
     to,
-    subject: 'Password Reset Code',
+    subject: 'Password Reset Code', 
     html: `<p>Your password reset code is: <b>${code}</b></p>`
   };
   return transporter.sendMail(mailOptions);

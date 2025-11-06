@@ -38,6 +38,10 @@ function AdminSignupForm() {
     }
   };
 
+  const goToLogin = () => {
+    navigate("/admin-login"); // adjust this route if your login path is different
+  };
+
   return (
     <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
       <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
@@ -92,6 +96,16 @@ function AdminSignupForm() {
           {loading ? "Signing up..." : "Sign Up"}
         </button>
       </form>
+
+      <p className="text-center mt-4 text-sm">
+        Already have an account?{" "}
+        <span
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={goToLogin}
+        >
+          Login
+        </span>
+      </p>
     </div>
   );
 }

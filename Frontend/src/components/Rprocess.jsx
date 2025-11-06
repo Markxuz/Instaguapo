@@ -18,7 +18,7 @@ function Rprocess() {
   const [gcashReference, setGcashReference] = useState("");
   const [showTerms, setShowTerms] = useState(false);
 
-  // Redirect if missing user or item
+  // Para sa missing na reservation details
   useEffect(() => {
     if (!user || !selectedItem) {
       alert("Missing reservation details. Redirecting...");
@@ -26,7 +26,7 @@ function Rprocess() {
     }
   }, [user, selectedItem, navigate]);
 
-  // ✅ Convert start–end range to array of dates
+
   const getDateRange = (start, end) => {
     const range = [];
     const current = new Date(start);
@@ -37,7 +37,7 @@ function Rprocess() {
     return range;
   };
 
-  // ✅ Fetch booked dates (include full range)
+
   useEffect(() => {
     async function fetchBookedDates() {
       try {
@@ -61,7 +61,7 @@ function Rprocess() {
     fetchBookedDates();
   }, [selectedItem]);
 
-  // ✅ Check if date is already booked
+  
   const isDateBooked = (date) =>
     bookedDates.some(
       (booked) => booked.toDateString() === date.toDateString()

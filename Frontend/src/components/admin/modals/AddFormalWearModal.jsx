@@ -22,7 +22,7 @@ const AddFormalWearModal = ({ onClose, onSuccess, defaultCategory ="" }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addFormalWear(formData); //sends FormData
+      await addFormalWear(formData);
       alert("Formal wear added!");
       if (onSuccess) onSuccess(); //reload collection after adding
       onClose();

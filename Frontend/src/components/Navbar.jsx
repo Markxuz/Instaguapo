@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-10">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo.</h1>
+        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo</h1>
 
         <div className="hidden md:flex flex-1 justify-center">
           <ul className="flex space-x-6">

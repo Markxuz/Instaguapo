@@ -82,7 +82,7 @@ const AdDash = () => {
     );
   });
 
-  // ✅ Summary data
+  // Summary data
   const todayReservations = reservations.filter(
     (res) =>
       new Date(res.ReservationDate).toDateString() ===

@@ -20,7 +20,7 @@ const AdminNavbar = () => {
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-10">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo.</h1>
+        <h1 className="text-2xl font-bold text-gray-800">InstaGuapo</h1>
 
 
         <div className="hidden md:flex flex-1 justify-center">
@@ -85,7 +85,7 @@ const AdminNavbar = () => {
           </div>
           
           <button 
-            onClick={() => navigate('/myaccount')} 
+            onClick={() => navigate('/admin-profile')} 
             className="text-gray-600 hover:text-purple-500 p-2"
           >
             <FaUser />
@@ -145,7 +145,7 @@ const AdminNavbar = () => {
             )}
           </Link>
           <Link 
-            to="/AdminProfile" 
+            to="/admin-profile" 
             onClick={() => setMenuOpen(false)} 
             className="block text-gray-600 hover:text-purple-600"
           >

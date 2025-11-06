@@ -26,6 +26,10 @@ function AdminLoginForm() {
     }
   };
 
+  const goToSignup = () => {
+    navigate("/admin-signup");
+  };
+
   return (
     <div className="bg-white shadow-md rounded-lg p-8 w-96 border border-gray-300">
       <h2 className="text-2xl font-bold text-center mb-6">Admin Login</h2>
@@ -57,6 +61,16 @@ function AdminLoginForm() {
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+
+      <p className="text-center mt-4 text-sm">
+        Don't have an account?{" "}
+        <span
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={goToSignup}
+        >
+          Sign up
+        </span>
+      </p>
     </div>
   );
 }
