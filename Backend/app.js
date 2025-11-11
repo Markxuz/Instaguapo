@@ -24,4 +24,7 @@ app.use("/api/admin/reservations", adminReservationRoutes);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+const adminCalendarRoutes = require("./routes/adminCalendarRoutes");
+app.use("/api/admin/calendar", adminCalendarRoutes);
+
 module.exports = app;

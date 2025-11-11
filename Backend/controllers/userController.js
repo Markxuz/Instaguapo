@@ -171,6 +171,76 @@ const deleteUser = (req, res) => {
   });
 };
 
+const getUserProfile = (req, res) => {
+  const userId = req.user.id;
+  User.findUserById(userId, (err, results) => {
+    if (err || results.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(results[0]);
+  });
+};
+
+
+const updateProfilePic = (req, res) => {
+  const UserID = req.user.id;
+  const { Fullname, Email, PhoneNumber } = req.body;
+  let ProfilePicPath = null;
+
+  // If a file was uploaded, save its path
+  if (req.file) {
+    ProfilePicPath = `uploads/${req.file.filename}`;
+  }
+
+  // SQL for update
+  const sql = ProfilePicPath
+    ? `
+        UPDATE User
+        SET Fullname = ?, Email = ?, PhoneNumber = ?, ProfilePic = ?, updated_at = NOW()
+        WHERE UserID = ?
+      `
+    : `
+        UPDATE User
+        SET Fullname = ?, Email = ?, PhoneNumber = ?, updated_at = NOW()
+        WHERE AdminID = ?
+      `;
+
+  const params = ProfilePicPath
+    ? [Fullname, Email, PhoneNumber, ProfilePicPath, UserID]
+    : [Fullname, Email, PhoneNumber, UserID];
+
+  db.query(sql, params, (err) => {
+    if (err) {
+      console.error("Error updating profile:", err);
+      return res.status(500).json({ message: "Server error updating profile" });
+    }
+
+    // Fetch the updated record and send back full data
+    const fetchSql = `
+      SELECT UserID, Fullname, Email, PhoneNumber, ProfilePic
+      FROM User
+      WHERE UserID = ?
+    `;
+
+    db.query(fetchSql, [UserID], (err, results) => {
+      if (err || results.length === 0) {
+        return res.status(500).json({ message: "Error fetching updated profile" });
+      }
+
+      const updatedUser = results[0];
+      // ✅ Include full URL for image preview in frontend
+      const imageUrl = updatedUser.ProfilePic
+        ? `http://localhost:5000/${updatedUser.ProfilePic}`
+        : null;
+
+      res.status(200).json({
+        message: "Profile updated successfully",
+        admin: { ...updatedUser, ProfilePic: imageUrl },
+      });
+    });
+  });
+};
+
 module.exports = {
   signup,
   verifyUser,
@@ -178,4 +248,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   deleteUser,
+  getUserProfile,
+  updateProfilePic,
 };

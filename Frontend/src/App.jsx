@@ -19,6 +19,7 @@ import AdVerificationForm from "./components/admin/Adverificationform";
 import AdDash from "./pages/adminblock/AdDash";
 import AdminCollection from "./pages/adminblock/AdminCollection";
 import AdminReservation from "./pages/adminblock/AdminReservation";
+import AdminCalendar from "./pages/adminblock/AdminCalendar";
 import AdminProfile from "./components/admin/AdminProfile";
 
 
@@ -40,7 +41,9 @@ function App() {
                 <Route path="/admin-dashboard" element={<AdDash />} />
                 <Route path="/admin-collection" element={<AdminCollection />} />
                 <Route path="/admin-reservation" element={<AdminReservation />} />
+                <Route path="/admin-calendar" element={<AdminCalendar />} />
                 <Route path="/admin-profile" element={<AdminProfile />} />
+                
 
 
                 <Route path="/mainpage" element={<Mainpage />} />

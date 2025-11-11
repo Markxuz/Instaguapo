@@ -28,7 +28,7 @@ const AdminNavbar = () => {
             <li><Link to="/admin-dashboard" className="text-black hover:text-blue-600 px-3 py-2">Home</Link></li>
             <li><Link to="/admin-collection" className="text-black hover:text-blue-600 px-3 py-2">Collection</Link></li>
             <li><Link to="/admin-reservation" className="text-black hover:text-blue-600 px-3 py-2">Reservation</Link></li>
-            <li><Link to="/AdminCalendar" className="text-black hover:text-blue-600 px-3 py-2">Calendar</Link></li>
+            <li><Link to="/admin-calendar" className="text-black hover:text-blue-600 px-3 py-2">Calendar</Link></li>
           </ul>
         </div>
 
