@@ -24,6 +24,11 @@ app.use("/api/admin/reservations", adminReservationRoutes);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+const adminSettingsRoutes = require("./routes/adminSettingsRoutes");
+app.use("/api/admin/settings", adminSettingsRoutes);
+
+app.use("/uploads/settings", express.static(path.join(__dirname, "uploads/settings")));
+
 const adminCalendarRoutes = require("./routes/adminCalendarRoutes");
 app.use("/api/admin/calendar", adminCalendarRoutes);
 

@@ -89,8 +89,8 @@ function AdminCalendar() {
             events={events.map((event) => ({
               ...event,
               display: "background", // this makes the event fill the whole day cell
-              backgroundColor: "#f87171", // red background
-              borderColor: "#f87171",
+              backgroundColor: "#f70c0c", // red background
+              borderColor: "#f70c0c",
             }))}
             height="80vh"
             headerToolbar={{

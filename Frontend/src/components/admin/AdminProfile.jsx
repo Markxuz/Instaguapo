@@ -6,6 +6,7 @@ import {
   updateAdminProfile,
   deleteAdminAccount,
 } from "../../api/AdminApi";
+import { getHeroImage, updateHeroImage } from "../../api/adminSettingsApi";
 
 function AdminProfile() {
   const [profile, setProfile] = useState({
@@ -16,12 +17,16 @@ function AdminProfile() {
     ProfilePhotoFile: null,
   });
 
-  const [heroImage, setHeroImage] = useState("");
+  const [heroImage, setHeroImage] = useState(""); // currently active hero image URL (served)
+  const [heroPreview, setHeroPreview] = useState(""); // preview URL when selecting a new file
+  const [newHeroFile, setNewHeroFile] = useState(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPasswordModal, setIsPasswordModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [newPassword, setNewPassword] = useState("");
 
+  // Fetch admin profile and hero image on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -42,10 +47,27 @@ function AdminProfile() {
         setLoading(false);
       }
     };
+
+    const fetchHero = async () => {
+      try {
+        const token = localStorage.getItem("adminToken"); // include token if your GET requires auth
+        const data = await getHeroImage(token);
+        // backend returns { heroImage: 'filename.ext' } or { heroImage: null }
+        if (data && data.heroImage) {
+          setHeroImage(`http://localhost:5000/uploads/settings/${data.heroImage}`);
+        } else {
+          setHeroImage(""); // fallback handled in render
+        }
+      } catch (error) {
+        console.error("Error fetching hero image:", error);
+      }
+    };
+
     fetchProfile();
+    fetchHero();
   }, []);
 
-  // ✅ Upload profile photo
+  // Upload profile photo preview (existing)
   const handleProfilePhoto = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,17 +76,42 @@ function AdminProfile() {
     }
   };
 
-  // ✅ Upload hero image (featured)
-  const handleHeroImageUpload = (e) => {
+  // When admin picks a new hero image file
+  const handleHeroUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const photoURL = URL.createObjectURL(file);
-      setHeroImage(photoURL);
-      alert("Hero image selected! (You can link this to backend later)");
+    if (!file) return;
+    setNewHeroFile(file);
+    const previewURL = URL.createObjectURL(file);
+    setHeroPreview(previewURL);
+  };
+
+  // Send new hero image to backend
+  const handleHeroUpdate = async () => {
+    if (!newHeroFile) {
+      alert("Please choose an image first.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("adminToken");
+      const res = await updateHeroImage(token, newHeroFile);
+      // backend returns { heroImage: 'filename.jpg', message: '...' }
+      if (res && res.heroImage) {
+        const servedUrl = `http://localhost:5000/uploads/settings/${res.heroImage}`;
+        setHeroImage(servedUrl);
+        setHeroPreview("");
+        setNewHeroFile(null);
+        alert(res.message || "Hero image updated successfully!");
+      } else {
+        alert("Update succeeded but response missing hero image.");
+      }
+    } catch (err) {
+      console.error("Error uploading hero image:", err);
+      alert(err.message || "Failed to upload hero image.");
     }
   };
 
-  // ✅ Update admin profile info
+  // Update admin profile info
   const handleUpdate = async () => {
     try {
       const result = await updateAdminProfile(profile);
@@ -82,10 +129,7 @@ function AdminProfile() {
     }
   };
 
-  // ✅ Change password modal action
-  const handleChangePassword = () => {
-    setIsPasswordModal(true);
-  };
+  const handleChangePassword = () => setIsPasswordModal(true);
 
   const submitNewPassword = () => {
     if (!newPassword) return alert("Enter a new password first.");
@@ -93,12 +137,10 @@ function AdminProfile() {
     setIsPasswordModal(false);
   };
 
-  // ✅ Add another account (redirect)
   const handleAddAccount = () => {
     window.location.href = "/admin-signup";
   };
 
-  // ✅ Delete account
   const handleDeleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account?")) return;
     try {
@@ -113,11 +155,10 @@ function AdminProfile() {
     }
   };
 
-  // ✅ Logout
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminData");
-    window.location.href = "/admin/login";
+    window.location.href = "/admin-login";
   };
 
   if (loading)
@@ -128,9 +169,12 @@ function AdminProfile() {
     );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-opacity-30"
+    <div
+      className="min-h-screen flex flex-col items-center justify-start bg-opacity-30"
       style={{
-        backgroundImage: "url('images/background_resized.jpg')",
+        backgroundImage: heroImage
+          ? `url(${heroImage})`
+          : "url('images/background_resized.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center bottom",
@@ -139,7 +183,7 @@ function AdminProfile() {
       <AdminNavbar />
 
       <div className="w-full p-6 bg-white shadow-md rounded-2xl max-w-4xl mx-auto my-8 mt-18 space-y-10">
-        {/* Header with Settings Button */}
+        {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Account Details</h2>
           <button
@@ -150,7 +194,7 @@ function AdminProfile() {
           </button>
         </div>
 
-        {/* Account Details */}
+        {/* Profile Details */}
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="relative">
             <img
@@ -195,30 +239,56 @@ function AdminProfile() {
           </div>
         </div>
 
-        {/* ✅ Hero Image Section */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Hero Image</h2>
-          <div className="border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-6 text-center">
-            {heroImage ? (
+        {/* Hero Image Section */}
+        <div className="mt-10 border-t pt-6">
+          <h2 className="text-lg font-semibold mb-4">Hero Image</h2>
+
+          <div className="border rounded-lg p-6 flex flex-col items-center bg-gray-50">
+            {/* Show preview if new file selected, otherwise show currently stored hero */}
+            {heroPreview ? (
+              <img
+                src={heroPreview}
+                alt="Hero preview"
+                className="w-full max-h-60 object-cover rounded mb-4"
+              />
+            ) : heroImage ? (
               <img
                 src={heroImage}
                 alt="Hero"
-                className="rounded-xl max-h-60 object-cover"
+                className="w-full max-h-60 object-cover rounded mb-4"
               />
             ) : (
-              <>
-                <FaUpload size={40} className="text-gray-400" />
-                <p className="mt-2 text-gray-500">Drag Photo To Upload</p>
-              </>
+              <p className="text-gray-500 text-sm mb-4">No hero image uploaded</p>
             )}
-            <label className="mt-3 bg-black text-white px-4 py-2 rounded-md cursor-pointer">
-              Choose Photo
-              <input type="file" className="hidden" onChange={handleHeroImageUpload} />
+
+            {/* Upload Box */}
+            <label
+              htmlFor="heroUpload"
+              className="w-full border-2 border-dashed border-gray-400 p-6 rounded-lg flex flex-col items-center cursor-pointer hover:bg-gray-100"
+            >
+              <span className="text-3xl">⬆️</span>
+              <p className="text-gray-600">Drag Photo To Upload</p>
+              <p className="mt-2 px-4 py-2 bg-black text-white rounded">Choose Photo</p>
+              <input
+                id="heroUpload"
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={handleHeroUpload}
+              />
             </label>
+
+            {/* Update Button */}
+            <button
+              onClick={handleHeroUpdate}
+              className="mt-4 px-4 py-2 bg-black text-white rounded-lg"
+            >
+              Update
+            </button>
           </div>
         </div>
 
-        {/* ✅ Password & Account Actions */}
+        {/* Password & Account Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-8 border-t pt-6">
           <div className="flex gap-3">
             <button
@@ -227,23 +297,17 @@ function AdminProfile() {
             >
               Change Password
             </button>
-            <button
-              onClick={handleDeleteAccount}
-              className="text-red-600 hover:underline"
-            >
+            <button onClick={handleDeleteAccount} className="text-red-600 hover:underline">
               Delete My Account
             </button>
           </div>
-          <button
-            onClick={handleAddAccount}
-            className="text-blue-600 hover:underline mt-4 sm:mt-0"
-          >
+          <button onClick={handleAddAccount} className="text-blue-600 hover:underline mt-4 sm:mt-0">
             Add another account
           </button>
         </div>
       </div>
 
-      {/* ✅ Settings Modal */}
+      {/* Settings Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center relative">
@@ -254,17 +318,14 @@ function AdminProfile() {
               ✕
             </button>
             <h3 className="text-lg font-semibold mb-4">Settings</h3>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 w-full"
-            >
+            <button onClick={handleLogout} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 w-full">
               Logout
             </button>
           </div>
         </div>
       )}
 
-      {/* ✅ Change Password Modal */}
+      {/* Change Password Modal */}
       {isPasswordModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center relative">
@@ -282,10 +343,7 @@ function AdminProfile() {
               placeholder="Enter new password"
               className="border p-2 rounded-md w-full mb-4"
             />
-            <button
-              onClick={submitNewPassword}
-              className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 w-full"
-            >
+            <button onClick={submitNewPassword} className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 w-full">
               Update Password
             </button>
           </div>

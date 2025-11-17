@@ -90,3 +90,5 @@ export async function deleteAdminAccount() {
   if (!response.ok) throw new Error(data.message || "Failed to delete account.");
   return data;
 }
+
+
