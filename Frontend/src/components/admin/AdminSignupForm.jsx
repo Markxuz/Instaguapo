@@ -96,16 +96,6 @@ function AdminSignupForm() {
           {loading ? "Signing up..." : "Sign Up"}
         </button>
       </form>
-
-      <p className="text-center mt-4 text-sm">
-        Already have an account?{" "}
-        <span
-          className="text-blue-500 cursor-pointer hover:underline"
-          onClick={goToLogin}
-        >
-          Login
-        </span>
-      </p>
     </div>
   );
 }

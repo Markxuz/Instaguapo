@@ -63,12 +63,12 @@ function AdminLoginForm() {
       </form>
 
       <p className="text-center mt-4 text-sm">
-        Don't have an account?{" "}
+        Forgot Password?{" "}
         <span
           className="text-blue-500 cursor-pointer hover:underline"
           onClick={goToSignup}
         >
-          Sign up
+          Click here
         </span>
       </p>
     </div>

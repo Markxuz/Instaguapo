@@ -29,6 +29,10 @@ app.use("/api/admin/settings", adminSettingsRoutes);
 
 app.use("/uploads/settings", express.static(path.join(__dirname, "uploads/settings")));
 
+const favoritesRoutes = require("./routes/favoritesRoutes");
+app.use("/api/favorites", favoritesRoutes);
+
+
 const adminCalendarRoutes = require("./routes/adminCalendarRoutes");
 app.use("/api/admin/calendar", adminCalendarRoutes);
 

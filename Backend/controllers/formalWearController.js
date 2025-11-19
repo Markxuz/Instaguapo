@@ -4,21 +4,38 @@ const db = require("../config/db"); // ✅ callback-based db
 exports.getFormalWear = (req, res) => {
   db.query("SELECT * FROM FormalWear ORDER BY created_at DESC", (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
+
+    res.json({
+      success: true,
+      formalWear: rows,
+    });
   });
 };
+
 
 // Add formal wear
 exports.addFormalWear = (req, res) => {
   const { Name, Category, Size, Price } = req.body;
-  const ImageURL = req.file ? `/uploads/${req.file.filename}` : null;
+  const ImageURL = req.file ? `/uploads/formal_wear/${req.file.filename}` : null;
+
 
   db.query(
     "INSERT INTO FormalWear (Name, Category, Size, Price, ImageURL) VALUES (?, ?, ?, ?, ?)",
     [Name, Category, Size, Price, ImageURL],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.json({ message: "FormalWear added successfully", id: result.insertId });
+      res.json({
+          success: true,
+          message: "FormalWear added successfully",
+          newWear: {
+            id: result.insertId,
+            Name,
+            Category,
+            Size,
+            Price,
+            ImageURL,
+          }
+        });
     }
   );
 };
@@ -27,14 +44,17 @@ exports.addFormalWear = (req, res) => {
 exports.updateFormalWear = (req, res) => {
   const { id } = req.params;
   const { Name, Category, Size, Price } = req.body;
-  const ImageURL = req.file ? `/uploads/${req.file.filename}` : req.body.ImageURL;
+  const ImageURL = req.file
+  ? `/uploads/formal_wear/${req.file.filename}`
+  : req.body.ImageURL;
+
 
   db.query(
     "UPDATE FormalWear SET Name=?, Category=?, Size=?, Price=?, ImageURL=? WHERE WearID=?",
     [Name, Category, Size, Price, ImageURL, id],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.json({ message: "FormalWear updated successfully" });
+      res.json({success: true, message: "FormalWear updated successfully",});
     }
   );
 };
@@ -45,6 +65,6 @@ exports.deleteFormalWear = (req, res) => {
 
   db.query("DELETE FROM FormalWear WHERE WearID=?", [id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json({ message: "FormalWear deleted successfully" });
+    res.json({success: true, message: "FormalWear deleted successfully" });
   });
 };

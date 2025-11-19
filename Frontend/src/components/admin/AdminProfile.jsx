@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaUpload, FaCog } from "react-icons/fa";
+import { FaUpload, FaCog , FaBell  } from "react-icons/fa";
 import AdminNavbar from "./AdminNavbar";
 import {
   getAdminProfile,
@@ -25,6 +25,8 @@ function AdminProfile() {
   const [isPasswordModal, setIsPasswordModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [newPassword, setNewPassword] = useState("");
+  const [pushEnabled, setPushEnabled] = useState(false);
+
 
   // Fetch admin profile and hero image on mount
   useEffect(() => {
@@ -311,16 +313,43 @@ function AdminProfile() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center relative">
+
+            {/* Close Button */}
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-2 right-3 text-gray-500 hover:text-black"
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
             >
               ✕
             </button>
-            <h3 className="text-lg font-semibold mb-4">Settings</h3>
-            <button onClick={handleLogout} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 w-full">
+
+            {/* Title */}
+            <h3 className="text-lg font-semibold mb-5">Settings</h3>
+
+            {/* Push Notifications */}
+            <div className="flex items-center justify-between bg-gray-100 px-4 py-3 rounded-md mb-4">
+              <div className="flex items-center gap-2">
+                <FaBell className="text-lg" />
+                <span className="font-medium">Push Notifications</span>
+              </div>
+
+              <button
+                onClick={() => setPushEnabled(!pushEnabled)}
+                className={`px-3 py-1 rounded-full text-sm ${
+                  pushEnabled ? "bg-green-600 text-white" : "bg-gray-300 text-gray-700"
+                }`}
+              >
+                {pushEnabled ? "ON" : "OFF"}
+              </button>
+            </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 w-full mt-2"
+            >
               Logout
             </button>
+
           </div>
         </div>
       )}

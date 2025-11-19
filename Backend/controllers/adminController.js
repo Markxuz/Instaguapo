@@ -256,7 +256,46 @@ const updateProfile = (req, res) => {
     });
   });
 };
+const createAdminByAdmin = async (req, res) => {
+  const requester = req.user; // comes from verifyToken middleware
 
+  // 1. Only admins can create new admins
+  if (requester.role !== 1) {
+    return res.status(403).json({ message: "Access denied" });
+  }
+
+  const { Fullname, Email, PhoneNumber, Password } = req.body;
+
+  if (!Fullname || !Email || !PhoneNumber || !Password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(Password, 10);
+    const VerificationCode = crypto.randomInt(100000, 1000000).toString();
+
+    Admin.createAdmin(
+      { Fullname, Email, PhoneNumber, Password: hashedPassword, RoleID: 1, VerificationCode },
+      async (err, result) => {
+        if (err) return res.status(500).json({ message: "Database error", err });
+
+        // Send verification email to new admin
+        try {
+          await sendVerificationEmail(Email, VerificationCode);
+          res.status(200).json({
+            message: "New admin created successfully. Verification email sent.",
+          });
+        } catch (emailErr) {
+          console.error(emailErr);
+          return res.status(500).json({ message: "Error sending email", emailErr });
+        }
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 
 module.exports = {
@@ -268,4 +307,5 @@ module.exports = {
   resetPassword,
   deleteAdmin,
   updateProfile,
+  createAdminByAdmin,
 };

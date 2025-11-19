@@ -8,7 +8,8 @@ router.post("/signup", adminController.signup);
 router.post("/verify", adminController.verifyAdmin);
 router.post("/login", adminController.loginAdmin);
 
-
+// Only logged-in admins can create new admins
+router.post("/create-admin", verifyToken, adminController.createAdminByAdmin);
 router.post("/forgot-password", adminController.forgotPassword);
 router.post("/reset-password", adminController.resetPassword);
 
